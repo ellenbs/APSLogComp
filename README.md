@@ -72,6 +72,8 @@ LIPGLOSS_IDENTIFIER= ("clear" | "colored");
 
 LIPBALM_IDENTIFIER = ("tinted" | "flavored");
 
+```
+
 ## Exemplo do uso da linguagem
 
 ```
