@@ -94,4 +94,25 @@ final look
 
 ```
 
+```
+makeup gwrm
+def apply_makeup(neutral, pink, red, blush_color, mascara_type)
+  foudantion: liquid;
+  blush: blush_color powder;
+  eyeshadow: neutral;
+  eyeliner: pencil;
+  mascara: mascara_type;
+  if (red in lipstick: matte) {
+    lipstick: red matte;
+  } else {
+    lipstick: pink cream;
+  }
+  lipgloss: clear;
+
+repeat 2 times 
+  apply_makeup(neutral, pink, red, brown, lengthening);
+  
+final look
+```
+
 
