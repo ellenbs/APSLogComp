@@ -60,7 +60,7 @@ FOUDANTION_IDENTIFIER = ("liquid" | "powder" | "bb-cream" | "cc-cream");
 
 BLUSH_IDENTIFIER = COLOR_IDENTIFIER, ("cream" | "powder");
 
-EYESHADOW_IDENTIFIER = ( "neutral" | "colorful");
+EYESHADOW_IDENTIFIER = COLOR_IDENTIFIER, ( "neutral" | "colorful");
 
 EYELINER_IDENTIFIER = ("liquid" | "pencil" | "gel");
 
@@ -77,24 +77,21 @@ LIPBALM_IDENTIFIER = ("tinted" | "flavored");
 ## Exemplo do uso da linguagem
 
 ```
-makeup grwm
+makeup gwrm
 
-def create_pink_look(color) {
-    foundation: liquid
-    blush: purple
-    eyeshadow: colorful
+makeup gwrm
+foudantion: powder
+blush: pink cream
+eyeshadow: colorful
+if pink in blush then
+    lipstick: red matte
+else
+    lipstick: neutral satin
+repeat 2 times
     eyeliner: gel
-    mascara: volumizing
-    if color in blush then {
-        lipstick: matte
-        } 
-        else {
-            lip-gloss: colored
-        }
-}
-create_pink_look(pink)
+    mascara: lengthening
+final look
 
-"final look"
 ```
 
 
