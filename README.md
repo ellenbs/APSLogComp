@@ -16,6 +16,8 @@ PROGRAM =  "makeup gwrm", { STATEMENT , LOOP_STATEMENT, CONDITIONAL, FUNCTION}, 
 
 STATEMENT = (FACE_LOOP | EYE_LOOP | LIP_LOOP);
 
+TYPE = ("foundation" | "blush" | "eyeshadow" | "eyeliner" | "mascara" | "lipstick" | "lipgloss" | "lipbalm" );
+
 FACE_LOOP = FOUDANTION_STATEMENT, BLUSH_STATEMENT;
 
 EYE_LOOP = EYESHADOW_STATEMENT, EYELINER_STATEMENT, MASCARA_STATEMENT;
@@ -24,7 +26,7 @@ LIP_LOOP = LIPSTICK_STATEMENT, LIPGLOSS_STATEMENT, LIPBALM_STATEMENT;
 
 LOOP_STATEMENT = "repeat", DIGIT, "times" { STATEMENT };
 
-CONDITIONAL = "if", COLOR_IDENTIFIER "in", STATEMENT, "then" , {STATEMENT}, "else" { STATEMENT};
+CONDITIONAL = "if", COLOR_IDENTIFIER "in", TYPE, "then" , { STATEMENT }, "else" { STATEMENT };
 
 COLOR_IDENTIFIER = ("neutral" | "pink" | "red" | "purple" | "brown" | "glittery");
 
@@ -60,7 +62,7 @@ FOUDANTION_IDENTIFIER = ("liquid" | "powder" | "bb-cream" | "cc-cream");
 
 BLUSH_IDENTIFIER = COLOR_IDENTIFIER, ("cream" | "powder");
 
-EYESHADOW_IDENTIFIER = COLOR_IDENTIFIER, ( "neutral" | "colorful");
+EYESHADOW_IDENTIFIER = COLOR_IDENTIFIER;
 
 EYELINER_IDENTIFIER = ("liquid" | "pencil" | "gel");
 
@@ -82,37 +84,49 @@ makeup gwrm
 makeup gwrm
 foudantion: powder
 blush: pink cream
-eyeshadow: colorful
-if pink in blush then
+eyeshadow: purple
+if pink in blush then {
     lipstick: red matte
-else
+    }
+else{
     lipstick: neutral satin
-repeat 2 times
+}
+    
+repeat 2 times {
     eyeliner: gel
     mascara: lengthening
+}
+
 final look
 
 ```
 
 ```
 makeup gwrm
-def apply_makeup(neutral, pink, red, blush_color, mascara_type)
-  foudantion: liquid;
-  blush: blush_color powder;
-  eyeshadow: neutral;
-  eyeliner: pencil;
-  mascara: mascara_type;
-  if (red in lipstick: matte) {
-    lipstick: red matte;
-  } else {
-    lipstick: pink cream;
-  }
-  lipgloss: clear;
 
-repeat 2 times 
-  apply_makeup(neutral, pink, red, brown, lengthening);
-  
+def natural_look(foundation, blush, eyeshadow, mascara, lipstick):
+    foundation: foundation
+    blush: blush
+    eyeshadow: eyeshadow
+    eyeliner: liquid
+    mascara: mascara
+    lipstick: lipstick cream
+
+    if blush in blush then {
+        eyeliner: pencil
+        eyeshadow: neutral
+    }
+    else {
+        eyeliner: liquid
+        eyeshadow: colorful
+    }
+
+repeat 2 times {
+    natural_look(cc-cream, pink powder, neutral, lengthening, pink satin)
+}
+
 final look
+
 ```
 
 
