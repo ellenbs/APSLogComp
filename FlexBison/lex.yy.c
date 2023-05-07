@@ -601,11 +601,9 @@ char *yytext_ptr;
 #line 1 "flex.l"
 #line 2 "flex.l"
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "sintatic.tab.h"
-#line 607 "lex.yy.c"
-#line 608 "lex.yy.c"
+#line 605 "lex.yy.c"
+#line 606 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -822,10 +820,10 @@ YY_DECL
 		}
 
 	{
-#line 8 "flex.l"
+#line 6 "flex.l"
 
 
-#line 828 "lex.yy.c"
+#line 826 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -895,220 +893,220 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 10 "flex.l"
+#line 8 "flex.l"
 ;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 12 "flex.l"
+#line 10 "flex.l"
 { printf("MAKEUP\n"); return MAKEUP;}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 13 "flex.l"
+#line 11 "flex.l"
 { printf("FINAL_LOOK\n"); return FINAL_LOOK;}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 15 "flex.l"
+#line 13 "flex.l"
 { printf("REPEAT\n"); return REPEAT;}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 16 "flex.l"
+#line 14 "flex.l"
 { printf("IF\n"); return IF;}
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 17 "flex.l"
+#line 15 "flex.l"
 { printf("IN\n"); return IN;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 18 "flex.l"
+#line 16 "flex.l"
 { printf("THEN\n"); return THEN;}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 19 "flex.l"
+#line 17 "flex.l"
 { printf("ELSE\n"); return ELSE;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 20 "flex.l"
+#line 18 "flex.l"
 { printf("DEF\n"); return DEF;}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 22 "flex.l"
+#line 20 "flex.l"
 { printf("FOUNDATION\n"); return FOUNDATION;}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 23 "flex.l"
+#line 21 "flex.l"
 { printf("BLUSH\n"); return BLUSH;}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 24 "flex.l"
+#line 22 "flex.l"
 { printf("EYESHADOW\n"); return EYESHADOW;}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 25 "flex.l"
+#line 23 "flex.l"
 { printf("EYELINER\n"); return EYELINER;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 26 "flex.l"
+#line 24 "flex.l"
 { printf("MASCARA\n"); return MASCARA;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 27 "flex.l"
+#line 25 "flex.l"
 { printf("LIPSTICK\n"); return LIPSTICK;}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 28 "flex.l"
+#line 26 "flex.l"
 { printf("LIPGLOSS\n"); return LIPGLOSS;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 29 "flex.l"
+#line 27 "flex.l"
 { printf("LIPBALM\n"); return LIPBALM;}
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 31 "flex.l"
+#line 29 "flex.l"
 { printf("neutral\n"); return COLOR_IDENTIFIER; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 32 "flex.l"
+#line 30 "flex.l"
 { printf("pink\n"); return COLOR_IDENTIFIER; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 33 "flex.l"
+#line 31 "flex.l"
 { printf("red\n"); return COLOR_IDENTIFIER; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 34 "flex.l"
+#line 32 "flex.l"
 { printf("purple\n"); return COLOR_IDENTIFIER; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 35 "flex.l"
+#line 33 "flex.l"
 { printf("brown\n"); return COLOR_IDENTIFIER; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 36 "flex.l"
+#line 34 "flex.l"
 { printf("glittery\n"); return COLOR_IDENTIFIER; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 38 "flex.l"
+#line 36 "flex.l"
 { printf("fliquid\n"); return FOUDANTION_IDENTIFIER; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 39 "flex.l"
+#line 37 "flex.l"
 { printf("fpowder\n"); return FOUDANTION_IDENTIFIER; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 40 "flex.l"
+#line 38 "flex.l"
 { printf("fbbcream\n"); return FOUDANTION_IDENTIFIER; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 41 "flex.l"
+#line 39 "flex.l"
 { printf("fcccream\n"); return FOUDANTION_IDENTIFIER; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 43 "flex.l"
+#line 41 "flex.l"
 { printf("bcream\n"); return BLUSH_IDENTIFIER; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 44 "flex.l"
+#line 42 "flex.l"
 { printf("bpowder\n"); return BLUSH_IDENTIFIER; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 46 "flex.l"
+#line 44 "flex.l"
 { printf("lpmatte\n"); return LIPSTICK_IDENTIFIER; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 47 "flex.l"
+#line 45 "flex.l"
 { printf("lpcream\n"); return LIPSTICK_IDENTIFIER; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 48 "flex.l"
+#line 46 "flex.l"
 { printf("lpsatin\n"); return LIPSTICK_IDENTIFIER; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 50 "flex.l"
+#line 48 "flex.l"
 { printf("lgclear\n"); return LIPGLOSS_IDENTIFIER; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 51 "flex.l"
+#line 49 "flex.l"
 { printf("colored\n"); return LIPGLOSS_IDENTIFIER; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 52 "flex.l"
+#line 50 "flex.l"
 { printf("lgcolored\n"); return LIPBALM_IDENTIFIER; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 53 "flex.l"
+#line 51 "flex.l"
 { printf("lgflavored\n"); return LIPBALM_IDENTIFIER; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 55 "flex.l"
+#line 53 "flex.l"
 { printf("DIGIT\n"); return DIGIT; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 56 "flex.l"
+#line 54 "flex.l"
 { printf("IDENTIFIER\n"); return IDENTIFIER; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 58 "flex.l"
+#line 56 "flex.l"
 { printf("LKEY\n"); return LKEY; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 59 "flex.l"
+#line 57 "flex.l"
 { printf("RKEY\n"); return RKEY; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 60 "flex.l"
+#line 58 "flex.l"
 { printf("COLON\n"); return COLON; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 62 "flex.l"
+#line 60 "flex.l"
 printf("Unknown token!\n"); yyterminate();
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 64 "flex.l"
+#line 62 "flex.l"
 ECHO;
 	YY_BREAK
-#line 1111 "lex.yy.c"
+#line 1109 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2125,5 +2123,5 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 64 "flex.l"
+#line 62 "flex.l"
 
