@@ -1,0 +1,24 @@
+makeup gwrm
+
+def natural_look(foundation, blush, eyeshadow, mascara, lipstick):
+    foundation: foundation
+    blush: blush
+    eyeshadow: eyeshadow
+    eyeliner: liquid
+    mascara: mascara
+    lipstick: lipstick lipstick_cream
+
+    if blush in blush then {
+        eyeliner: pencil
+        eyeshadow: neutral
+    }
+    else {
+        eyeliner: liquid
+        eyeshadow: colorful
+    }
+
+repeat 2 times {
+    natural_look(cccream, pink powder, neutral, lengthening, pink satin)
+}
+
+final look
