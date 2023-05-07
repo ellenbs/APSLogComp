@@ -80,7 +80,7 @@ LIPBALM_IDENTIFIER = ("lbtinted" | "lbflavored");
 
 ```
 makeup gwrm
-foudantion: fpowder
+foundation: fpowder
 blush: bcream
 eyeshadow: purple
 if bcream in blush then {
@@ -97,4 +97,16 @@ repeat 2 times {
 
 final look
 
+```
+## Como utilizar Flex e Bison:
+
+```
+bison -dv syntatic.y
+flex -l semantic.l
+gcc -o flex_analyzer lex.yy.c -lfl
+gcc -o bison_analyzer syntatic.tab.c lex.yy.c -lfl
+```
+```
+./flex_analyzer < codigo_exemplo.txt
+./bison_analyzer < codigo_exemplor.txt
 ```

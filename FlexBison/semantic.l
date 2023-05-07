@@ -1,7 +1,7 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-#include "sintatic.tab.h"
+#include "syntatic.tab.h"
 %}
 
 %%
@@ -35,10 +35,10 @@
 "brown"                 { printf("brown\n"); return COLOR_IDENTIFIER; }
 "glittery"              { printf("glittery\n"); return COLOR_IDENTIFIER; }
 
-"fliquid"               { printf("fliquid\n"); return FOUDANTION_IDENTIFIER; }
-"fpowder"               { printf("fpowder\n"); return FOUDANTION_IDENTIFIER; }
-"fbbcream"              { printf("fbbcream\n"); return FOUDANTION_IDENTIFIER; }
-"fcccream"              { printf("fcccream\n"); return FOUDANTION_IDENTIFIER; }
+"fliquid"               { printf("fliquid\n"); return FOUNDATION_IDENTIFIER; }
+"fpowder"               { printf("fpowder\n"); return FOUNDATION_IDENTIFIER; }
+"fbbcream"              { printf("fbbcream\n"); return FOUNDATION_IDENTIFIER; }
+"fcccream"              { printf("fcccream\n"); return FOUNDATION_IDENTIFIER; }
 
 "bcream"                { printf("bcream\n"); return BLUSH_IDENTIFIER; }
 "bpowder"               { printf("bpowder\n"); return BLUSH_IDENTIFIER; }

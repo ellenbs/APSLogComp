@@ -35,8 +35,8 @@
    especially those whose name start with YY_ or yy_.  They are
    private implementation details that can be changed or removed.  */
 
-#ifndef YY_YY_SINTATIC_TAB_H_INCLUDED
-# define YY_YY_SINTATIC_TAB_H_INCLUDED
+#ifndef YY_YY_SYNTATIC_TAB_H_INCLUDED
+# define YY_YY_SYNTATIC_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -72,7 +72,7 @@ extern int yydebug;
     LIPGLOSS = 273,                /* LIPGLOSS  */
     LIPBALM = 274,                 /* LIPBALM  */
     COLOR_IDENTIFIER = 275,        /* COLOR_IDENTIFIER  */
-    FOUDANTION_IDENTIFIER = 276,   /* FOUDANTION_IDENTIFIER  */
+    FOUNDATION_IDENTIFIER = 276,   /* FOUNDATION_IDENTIFIER  */
     BLUSH_IDENTIFIER = 277,        /* BLUSH_IDENTIFIER  */
     EYESHADOW_IDENTIFIER = 278,    /* EYESHADOW_IDENTIFIER  */
     LIPSTICK_IDENTIFIER = 279,     /* LIPSTICK_IDENTIFIER  */
@@ -103,4 +103,4 @@ extern YYSTYPE yylval;
 int yyparse (void);
 
 
-#endif /* !YY_YY_SINTATIC_TAB_H_INCLUDED  */
+#endif /* !YY_YY_SYNTATIC_TAB_H_INCLUDED  */
