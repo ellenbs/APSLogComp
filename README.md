@@ -60,7 +60,7 @@ IDENTIFIER = LETTER, { LETTER | DIGIT | "_" };
 
 FOUDANTION_IDENTIFIER = ("liquid" | "powder" | "bb-cream" | "cc-cream");
 
-BLUSH_IDENTIFIER = COLOR_IDENTIFIER, ("cream" | "powder");
+BLUSH_IDENTIFIER = COLOR_IDENTIFIER, ("cream" | "blush_powder");
 
 EYESHADOW_IDENTIFIER = COLOR_IDENTIFIER;
 
@@ -68,7 +68,7 @@ EYELINER_IDENTIFIER = ("liquid" | "pencil" | "gel");
 
 MASCARA_IDENTIFIER = ("volumizing" | "lengthening" | "curling");
 
-LIPSTICK_IDENTIFIER = COLOR_IDENTIFIER, ( "matte" | "cream" | "satin" );
+LIPSTICK_IDENTIFIER = COLOR_IDENTIFIER, ( "matte" | "lipstick_cream" | "satin" );
 
 LIPGLOSS_IDENTIFIER= ("clear" | "colored");
 
