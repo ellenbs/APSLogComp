@@ -8,76 +8,79 @@ extern int yylex();
 void yyerror(const char *s) { printf("ERROR: %s\n", s); }
 %}
 
-%token MAKEUP FINAL_LOOK REPEAT IF IN THEN ELSE DEF 
-%token FOUNDATION BLUSH EYESHADOW EYELINER MASCARA LIPSTICK LIPGLOSS LIPBALM 
-%token<color> COLOR_IDENTIFIER 
-%token<foundation_type> FOUDANTION_IDENTIFIER 
-%token<blush_type> BLUSH_IDENTIFIER 
-%token<lipstick_type> LIPSTICK_IDENTIFIER 
-%token<lipgloss_type> LIPGLOSS_IDENTIFIER 
-%token<lipbalm_type> LIPBALM_IDENTIFIER 
+%token MAKEUP FINAL_LOOK REPEAT TIMES IF IN THEN ELSE DEF FOUNDATION BLUSH EYESHADOW EYELINER MASCARA LIPSTICK LIPGLOSS LIPBALM
+%token COLOR_IDENTIFIER FOUDANTION_IDENTIFIER BLUSH_IDENTIFIER EYESHADOW_IDENTIFIER LIPSTICK_IDENTIFIER LIPGLOSS_IDENTIFIER LIPBALM_IDENTIFIER MASCARA_IDENTIFIER EYELINER_IDENTIFIER
 %token DIGIT IDENTIFIER LKEY RKEY COLON
+
+%start program
 
 %%
 
 program:
-    makeup_statement
-    | makeup_statement program
+    MAKEUP statements FINAL_LOOK { printf("Parsing complete.\n"); }
     ;
 
-makeup_statement:
-    MAKEUP LKEY statement_list RKEY FINAL_LOOK
-    ;
-
-statement_list:
+statements:
     statement
-    | statement statement_list
+    | statements statement
     ;
 
 statement:
-    repeat_statement
+    foundation_statement
+    | blush_statement
+    | eyeshadow_statement
+    | eyeliner_statement
+    | mascara_statement
+    | lipstick_statement
+    | lipgloss_statement
+    | lipbalm_statement
     | if_statement
-    | in_statement
-    | def_statement
+    | repeat_statement
     ;
 
-repeat_statement:
-    REPEAT DIGIT LKEY statement_list RKEY
+foundation_statement:
+    FOUNDATION COLON FOUDANTION_IDENTIFIER { printf("Found foundation statement: %s %s\n", $1, $3); }
+    ;
+
+blush_statement:
+    BLUSH COLON BLUSH_IDENTIFIER { printf("Found blush statement: %s %s\n", $1, $3); }
+    ;
+
+eyeshadow_statement:
+    EYESHADOW COLON COLOR_IDENTIFIER { printf("Found eyeshadow statement: %s %s\n", $1, $3); }
+    ;
+
+eyeliner_statement:
+    EYELINER COLON EYELINER_IDENTIFIER { printf("Found eyeliner statement: %s %s\n", $1, $3); }
+    ;
+
+mascara_statement:
+    MASCARA COLON MASCARA_IDENTIFIER { printf("Found mascara statement: %s %s\n", $1, $3); }
+    ;
+
+lipstick_statement:
+    LIPSTICK COLON LIPSTICK_IDENTIFIER { printf("Found lipstick statement: %s %s\n", $1, $3); }
+    ;
+
+lipgloss_statement:
+    LIPGLOSS COLON LIPGLOSS_IDENTIFIER { printf("Found lipgloss statement: %s %s\n", $1, $3); }
+    ;
+
+lipbalm_statement:
+    LIPBALM COLON LIPBALM_IDENTIFIER { printf("Found lipbalm statement: %s %s\n", $1, $3); }
     ;
 
 if_statement:
-    IF IDENTIFIER IN COLOR_IDENTIFIER THEN LKEY statement_list RKEY ELSE LKEY statement_list RKEY
+    IF BLUSH_IDENTIFIER IN BLUSH THEN LKEY statements RKEY ELSE LKEY statements RKEY { printf("Found if statement.\n"); }
     ;
 
-in_statement:
-    IN FOUNDATION COLOR_IDENTIFIER
-    | IN BLUSH COLOR_IDENTIFIER
-    | IN EYESHADOW COLOR_IDENTIFIER
-    | IN EYELINER COLOR_IDENTIFIER
-    | IN MASCARA COLOR_IDENTIFIER
-    | IN LIPSTICK COLOR_IDENTIFIER
-    | IN LIPGLOSS COLOR_IDENTIFIER
-    | IN LIPBALM COLOR_IDENTIFIER
-    ;
-
-def_statement:
-    DEF FOUNDATION COLON FOUDANTION_IDENTIFIER
-    | DEF BLUSH COLON BLUSH_IDENTIFIER
-    | DEF EYESHADOW COLON COLOR_IDENTIFIER
-    | DEF EYELINER COLON COLOR_IDENTIFIER
-    | DEF MASCARA COLON COLOR_IDENTIFIER
-    | DEF LIPSTICK COLON LIPSTICK_IDENTIFIER
-    | DEF LIPGLOSS COLON LIPGLOSS_IDENTIFIER
-    | DEF LIPBALM COLON LIPBALM_IDENTIFIER
+repeat_statement:
+    REPEAT DIGIT TIMES LKEY statements RKEY { printf("Found repeat statement.\n"); }
     ;
 
 %%
 
-int main() {
+int main(void) {
     yyparse();
     return 0;
-}
-
-void yyerror(char const *s) {
-    printf("error: %s\n", s);
 }

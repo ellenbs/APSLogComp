@@ -1,14 +1,14 @@
-/* A Bison parser, made by GNU Bison 2.3.  */
+/* A Bison parser, made by GNU Bison 3.8.2.  */
 
-/* Skeleton interface for Bison's Yacc-like parsers in C
+/* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989, 1990, 2000, 2001, 2002, 2003, 2004, 2005, 2006
-   Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
+   Inc.
 
-   This program is free software; you can redistribute it and/or modify
+   This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
-   the Free Software Foundation; either version 2, or (at your option)
-   any later version.
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
 
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -16,9 +16,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program; if not, write to the Free Software
-   Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA 02110-1301, USA.  */
+   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -33,79 +31,76 @@
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Tokens.  */
+/* DO NOT RELY ON FEATURES THAT ARE NOT DOCUMENTED in the manual,
+   especially those whose name start with YY_ or yy_.  They are
+   private implementation details that can be changed or removed.  */
+
+#ifndef YY_YY_SINTATIC_TAB_H_INCLUDED
+# define YY_YY_SINTATIC_TAB_H_INCLUDED
+/* Debug traces.  */
+#ifndef YYDEBUG
+# define YYDEBUG 0
+#endif
+#if YYDEBUG
+extern int yydebug;
+#endif
+
+/* Token kinds.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-   /* Put the tokens into the symbol table, so that GDB and other debuggers
-      know about them.  */
-   enum yytokentype {
-     MAKEUP = 258,
-     FINAL_LOOK = 259,
-     REPEAT = 260,
-     IF = 261,
-     IN = 262,
-     THEN = 263,
-     ELSE = 264,
-     DEF = 265,
-     FOUNDATION = 266,
-     BLUSH = 267,
-     EYESHADOW = 268,
-     EYELINER = 269,
-     MASCARA = 270,
-     LIPSTICK = 271,
-     LIPGLOSS = 272,
-     LIPBALM = 273,
-     COLOR_IDENTIFIER = 274,
-     FOUDANTION_IDENTIFIER = 275,
-     BLUSH_IDENTIFIER = 276,
-     LIPSTICK_IDENTIFIER = 277,
-     LIPGLOSS_IDENTIFIER = 278,
-     LIPBALM_IDENTIFIER = 279,
-     DIGIT = 280,
-     IDENTIFIER = 281,
-     LKEY = 282,
-     RKEY = 283,
-     COLON = 284
-   };
+  enum yytokentype
+  {
+    YYEMPTY = -2,
+    YYEOF = 0,                     /* "end of file"  */
+    YYerror = 256,                 /* error  */
+    YYUNDEF = 257,                 /* "invalid token"  */
+    MAKEUP = 258,                  /* MAKEUP  */
+    FINAL_LOOK = 259,              /* FINAL_LOOK  */
+    REPEAT = 260,                  /* REPEAT  */
+    TIMES = 261,                   /* TIMES  */
+    IF = 262,                      /* IF  */
+    IN = 263,                      /* IN  */
+    THEN = 264,                    /* THEN  */
+    ELSE = 265,                    /* ELSE  */
+    DEF = 266,                     /* DEF  */
+    FOUNDATION = 267,              /* FOUNDATION  */
+    BLUSH = 268,                   /* BLUSH  */
+    EYESHADOW = 269,               /* EYESHADOW  */
+    EYELINER = 270,                /* EYELINER  */
+    MASCARA = 271,                 /* MASCARA  */
+    LIPSTICK = 272,                /* LIPSTICK  */
+    LIPGLOSS = 273,                /* LIPGLOSS  */
+    LIPBALM = 274,                 /* LIPBALM  */
+    COLOR_IDENTIFIER = 275,        /* COLOR_IDENTIFIER  */
+    FOUDANTION_IDENTIFIER = 276,   /* FOUDANTION_IDENTIFIER  */
+    BLUSH_IDENTIFIER = 277,        /* BLUSH_IDENTIFIER  */
+    EYESHADOW_IDENTIFIER = 278,    /* EYESHADOW_IDENTIFIER  */
+    LIPSTICK_IDENTIFIER = 279,     /* LIPSTICK_IDENTIFIER  */
+    LIPGLOSS_IDENTIFIER = 280,     /* LIPGLOSS_IDENTIFIER  */
+    LIPBALM_IDENTIFIER = 281,      /* LIPBALM_IDENTIFIER  */
+    MASCARA_IDENTIFIER = 282,      /* MASCARA_IDENTIFIER  */
+    EYELINER_IDENTIFIER = 283,     /* EYELINER_IDENTIFIER  */
+    DIGIT = 284,                   /* DIGIT  */
+    IDENTIFIER = 285,              /* IDENTIFIER  */
+    LKEY = 286,                    /* LKEY  */
+    RKEY = 287,                    /* RKEY  */
+    COLON = 288                    /* COLON  */
+  };
+  typedef enum yytokentype yytoken_kind_t;
 #endif
-/* Tokens.  */
-#define MAKEUP 258
-#define FINAL_LOOK 259
-#define REPEAT 260
-#define IF 261
-#define IN 262
-#define THEN 263
-#define ELSE 264
-#define DEF 265
-#define FOUNDATION 266
-#define BLUSH 267
-#define EYESHADOW 268
-#define EYELINER 269
-#define MASCARA 270
-#define LIPSTICK 271
-#define LIPGLOSS 272
-#define LIPBALM 273
-#define COLOR_IDENTIFIER 274
-#define FOUDANTION_IDENTIFIER 275
-#define BLUSH_IDENTIFIER 276
-#define LIPSTICK_IDENTIFIER 277
-#define LIPGLOSS_IDENTIFIER 278
-#define LIPBALM_IDENTIFIER 279
-#define DIGIT 280
-#define IDENTIFIER 281
-#define LKEY 282
-#define RKEY 283
-#define COLON 284
 
-
-
-
+/* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef int YYSTYPE;
-# define yystype YYSTYPE /* obsolescent; will be withdrawn */
-# define YYSTYPE_IS_DECLARED 1
 # define YYSTYPE_IS_TRIVIAL 1
+# define YYSTYPE_IS_DECLARED 1
 #endif
+
 
 extern YYSTYPE yylval;
 
+
+int yyparse (void);
+
+
+#endif /* !YY_YY_SINTATIC_TAB_H_INCLUDED  */

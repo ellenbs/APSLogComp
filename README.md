@@ -28,8 +28,6 @@ LOOP_STATEMENT = "repeat", DIGIT, "times" { STATEMENT };
 
 CONDITIONAL = "if", COLOR_IDENTIFIER "in", TYPE, "then" , { STATEMENT }, "else" { STATEMENT };
 
-COLOR_IDENTIFIER = ("neutral" | "pink" | "red" | "purple" | "brown" | "glittery");
-
 FUNCTION = "def",  FUNCTION_NAME, "(" , { VARIABLES } , ")" , { STATEMENT };
 
 FUNCTION_NAME = IDENTIFIER;
@@ -58,9 +56,11 @@ VARIABLES = COLOR_IDENTIFIER, { "," COLOR_IDENTIFIER };
 
 IDENTIFIER = LETTER, { LETTER | DIGIT | "_" };
 
-FOUDANTION_IDENTIFIER = ("liquid" | "powder" | "bb-cream" | "cc-cream");
+COLOR_IDENTIFIER = ("neutral" | "pink" | "red" | "purple" | "brown" | "glittery");
 
-BLUSH_IDENTIFIER = COLOR_IDENTIFIER, ("cream" | "blush_powder");
+FOUDANTION_IDENTIFIER = ("fliquid" | "fpowder" | "fbbcream" | "fcccream");
+
+BLUSH_IDENTIFIER = ("bcream" | "bpowder");
 
 EYESHADOW_IDENTIFIER = COLOR_IDENTIFIER;
 
@@ -68,11 +68,11 @@ EYELINER_IDENTIFIER = ("liquid" | "pencil" | "gel");
 
 MASCARA_IDENTIFIER = ("volumizing" | "lengthening" | "curling");
 
-LIPSTICK_IDENTIFIER = COLOR_IDENTIFIER, ( "matte" | "lipstick_cream" | "satin" );
+LIPSTICK_IDENTIFIER = ( "lpmatte" | "lpcream" | "lpsatin" );
 
-LIPGLOSS_IDENTIFIER= ("clear" | "colored");
+LIPGLOSS_IDENTIFIER= ("lgclear" | "lgcolored");
 
-LIPBALM_IDENTIFIER = ("tinted" | "flavored");
+LIPBALM_IDENTIFIER = ("lbtinted" | "lbflavored");
 
 ```
 
@@ -80,16 +80,14 @@ LIPBALM_IDENTIFIER = ("tinted" | "flavored");
 
 ```
 makeup gwrm
-
-makeup gwrm
-foudantion: powder
-blush: pink cream
+foudantion: fpowder
+blush: bcream
 eyeshadow: purple
-if pink in blush then {
-    lipstick: red matte
+if bcream in blush then {
+    lipstick: lpmatte
     }
 else{
-    lipstick: neutral satin
+    lipstick: lpsatin
 }
     
 repeat 2 times {
@@ -100,33 +98,3 @@ repeat 2 times {
 final look
 
 ```
-
-```
-makeup gwrm
-
-def natural_look(foundation, blush, eyeshadow, mascara, lipstick):
-    foundation: foundation
-    blush: blush
-    eyeshadow: eyeshadow
-    eyeliner: liquid
-    mascara: mascara
-    lipstick: lipstick cream
-
-    if blush in blush then {
-        eyeliner: pencil
-        eyeshadow: neutral
-    }
-    else {
-        eyeliner: liquid
-        eyeshadow: colorful
-    }
-
-repeat 2 times {
-    natural_look(cc-cream, pink powder, neutral, lengthening, pink satin)
-}
-
-final look
-
-```
-
-
