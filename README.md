@@ -102,7 +102,7 @@ final look
 
 ```
 bison -dv syntatic.y
-flex -l semantic.l
+flex -l lexic.l
 gcc -o flex_analyzer lex.yy.c -lfl
 gcc -o bison_analyzer syntatic.tab.c lex.yy.c -lfl
 ```
