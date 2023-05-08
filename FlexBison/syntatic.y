@@ -17,7 +17,7 @@ void yyerror(const char *s) { printf("ERROR: %s\n", s); }
 %%
 
 program:
-    MAKEUP statements FINAL_LOOK { printf("Parsing complete.\n"); }
+    MAKEUP statements FINAL_LOOK { printf("\nParsing complete.\n\n"); }
     ;
 
 statements:
@@ -39,50 +39,50 @@ statement:
     ;
 
 foundation_statement:
-    FOUNDATION COLON FOUNDATION_IDENTIFIER { printf("Found foundation statement: %s %s\n", $1, $3); }
+    FOUNDATION COLON FOUNDATION_IDENTIFIER { printf("\nFound foundation statement.\n\n"); }
     ;
 
 blush_statement:
-    BLUSH COLON BLUSH_IDENTIFIER { printf("Found blush statement: %s %s\n", $1, $3); }
+    BLUSH COLON BLUSH_IDENTIFIER { printf("\nFound blush statement.\n\n"); }
     ;
 
 eyeshadow_statement:
-    EYESHADOW COLON COLOR_IDENTIFIER { printf("Found eyeshadow statement: %s %s\n", $1, $3); }
+    EYESHADOW COLON COLOR_IDENTIFIER { printf("\nFound eyeshadow statement.\n\n"); }
     ;
 
 eyeliner_statement:
-    EYELINER COLON EYELINER_IDENTIFIER { printf("Found eyeliner statement: %s %s\n", $1, $3); }
+    EYELINER COLON EYELINER_IDENTIFIER { printf("\nFound eyeliner statement.\n\n"); }
     ;
 
 mascara_statement:
-    MASCARA COLON MASCARA_IDENTIFIER { printf("Found mascara statement: %s %s\n", $1, $3); }
+    MASCARA COLON MASCARA_IDENTIFIER { printf("\nFound mascara statement.\n\n"); }
     ;
 
 lipstick_statement:
-    LIPSTICK COLON LIPSTICK_IDENTIFIER { printf("Found lipstick statement: %s %s\n", $1, $3); }
+    LIPSTICK COLON LIPSTICK_IDENTIFIER { printf("\nFound lipstick statement.\n\n"); }
     ;
 
 lipgloss_statement:
-    LIPGLOSS COLON LIPGLOSS_IDENTIFIER { printf("Found lipgloss statement: %s %s\n", $1, $3); }
+    LIPGLOSS COLON LIPGLOSS_IDENTIFIER { printf("\nFound lipgloss statement.\n\n"); }
     ;
 
 lipbalm_statement:
-    LIPBALM COLON LIPBALM_IDENTIFIER { printf("Found lipbalm statement: %s %s\n", $1, $3); }
+    LIPBALM COLON LIPBALM_IDENTIFIER { printf("\nFound lipbalm statement.\n\n"); }
     ;
 
 if_statement:
-    IF BLUSH_IDENTIFIER IN BLUSH THEN LKEY statements RKEY ELSE LKEY statements RKEY
-    | IF FOUNDATION_IDENTIFIER IN FOUNDATION THEN LKEY statements RKEY ELSE LKEY statements RKEY 
-    | IF EYESHADOW_IDENTIFIER IN EYESHADOW THEN LKEY statements RKEY ELSE LKEY statements RKEY
-    | IF EYELINER_IDENTIFIER IN EYELINER THEN LKEY statements RKEY ELSE LKEY statements RKEY 
-    | IF MASCARA_IDENTIFIER IN MASCARA THEN LKEY statements RKEY ELSE LKEY statements RKEY 
-    | IF LIPSTICK_IDENTIFIER IN LIPSTICK THEN LKEY statements RKEY ELSE LKEY statements RKEY  
-    | IF LIPGLOSS_IDENTIFIER IN LIPGLOSS THEN LKEY statements RKEY ELSE LKEY statements RKEY  
-    | IF LIPBALM_IDENTIFIER IN LIPBALM THEN LKEY statements RKEY ELSE LKEY statements RKEY   
+    IF BLUSH_IDENTIFIER IN BLUSH THEN LKEY statements RKEY ELSE LKEY statements RKEY { printf("\nFound IF statement.\n\n"); }
+    | IF FOUNDATION_IDENTIFIER IN FOUNDATION THEN LKEY statements RKEY ELSE LKEY statements RKEY { printf("\nFound IF statement.\n\n"); }
+    | IF EYESHADOW_IDENTIFIER IN EYESHADOW THEN LKEY statements RKEY ELSE LKEY statements RKEY { printf("\nFound IF statement.\n\n"); }
+    | IF EYELINER_IDENTIFIER IN EYELINER THEN LKEY statements RKEY ELSE LKEY statements RKEY { printf("\nFound IF statement.\n\n"); }
+    | IF MASCARA_IDENTIFIER IN MASCARA THEN LKEY statements RKEY ELSE LKEY statements RKEY { printf("\nFound IF statement.\n\n"); }
+    | IF LIPSTICK_IDENTIFIER IN LIPSTICK THEN LKEY statements RKEY ELSE LKEY statements RKEY  { printf("\nFound IF statement.\n\n"); }
+    | IF LIPGLOSS_IDENTIFIER IN LIPGLOSS THEN LKEY statements RKEY ELSE LKEY statements RKEY  { printf("\nFound IF statement.\n\n"); }
+    | IF LIPBALM_IDENTIFIER IN LIPBALM THEN LKEY statements RKEY ELSE LKEY statements RKEY   { printf("\nFound IF statement.\n\n"); }
     ;
 
 repeat_statement:
-    REPEAT DIGIT TIMES LKEY statements RKEY { printf("Found repeat statement.\n"); }
+    REPEAT DIGIT TIMES LKEY statements RKEY { printf("\nFound repeat statement.\n\n"); }
     ;
 
 %%

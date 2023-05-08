@@ -1246,66 +1246,114 @@ yyreduce:
     {
   case 2: /* program: MAKEUP statements FINAL_LOOK  */
 #line 20 "syntatic.y"
-                                 { printf("Parsing complete.\n"); }
+                                 { printf("\nParsing complete.\n\n"); }
 #line 1251 "syntatic.tab.c"
     break;
 
   case 15: /* foundation_statement: FOUNDATION COLON FOUNDATION_IDENTIFIER  */
 #line 42 "syntatic.y"
-                                           { printf("Found foundation statement: %s %s\n", yyvsp[-2], yyvsp[0]); }
+                                           { printf("\nFound foundation statement.\n\n"); }
 #line 1257 "syntatic.tab.c"
     break;
 
   case 16: /* blush_statement: BLUSH COLON BLUSH_IDENTIFIER  */
 #line 46 "syntatic.y"
-                                 { printf("Found blush statement: %s %s\n", yyvsp[-2], yyvsp[0]); }
+                                 { printf("\nFound blush statement.\n\n"); }
 #line 1263 "syntatic.tab.c"
     break;
 
   case 17: /* eyeshadow_statement: EYESHADOW COLON COLOR_IDENTIFIER  */
 #line 50 "syntatic.y"
-                                     { printf("Found eyeshadow statement: %s %s\n", yyvsp[-2], yyvsp[0]); }
+                                     { printf("\nFound eyeshadow statement.\n\n"); }
 #line 1269 "syntatic.tab.c"
     break;
 
   case 18: /* eyeliner_statement: EYELINER COLON EYELINER_IDENTIFIER  */
 #line 54 "syntatic.y"
-                                       { printf("Found eyeliner statement: %s %s\n", yyvsp[-2], yyvsp[0]); }
+                                       { printf("\nFound eyeliner statement.\n\n"); }
 #line 1275 "syntatic.tab.c"
     break;
 
   case 19: /* mascara_statement: MASCARA COLON MASCARA_IDENTIFIER  */
 #line 58 "syntatic.y"
-                                     { printf("Found mascara statement: %s %s\n", yyvsp[-2], yyvsp[0]); }
+                                     { printf("\nFound mascara statement.\n\n"); }
 #line 1281 "syntatic.tab.c"
     break;
 
   case 20: /* lipstick_statement: LIPSTICK COLON LIPSTICK_IDENTIFIER  */
 #line 62 "syntatic.y"
-                                       { printf("Found lipstick statement: %s %s\n", yyvsp[-2], yyvsp[0]); }
+                                       { printf("\nFound lipstick statement.\n\n"); }
 #line 1287 "syntatic.tab.c"
     break;
 
   case 21: /* lipgloss_statement: LIPGLOSS COLON LIPGLOSS_IDENTIFIER  */
 #line 66 "syntatic.y"
-                                       { printf("Found lipgloss statement: %s %s\n", yyvsp[-2], yyvsp[0]); }
+                                       { printf("\nFound lipgloss statement.\n\n"); }
 #line 1293 "syntatic.tab.c"
     break;
 
   case 22: /* lipbalm_statement: LIPBALM COLON LIPBALM_IDENTIFIER  */
 #line 70 "syntatic.y"
-                                     { printf("Found lipbalm statement: %s %s\n", yyvsp[-2], yyvsp[0]); }
+                                     { printf("\nFound lipbalm statement.\n\n"); }
 #line 1299 "syntatic.tab.c"
+    break;
+
+  case 23: /* if_statement: IF BLUSH_IDENTIFIER IN BLUSH THEN LKEY statements RKEY ELSE LKEY statements RKEY  */
+#line 74 "syntatic.y"
+                                                                                     { printf("\nFound IF statement.\n\n"); }
+#line 1305 "syntatic.tab.c"
+    break;
+
+  case 24: /* if_statement: IF FOUNDATION_IDENTIFIER IN FOUNDATION THEN LKEY statements RKEY ELSE LKEY statements RKEY  */
+#line 75 "syntatic.y"
+                                                                                                 { printf("\nFound IF statement.\n\n"); }
+#line 1311 "syntatic.tab.c"
+    break;
+
+  case 25: /* if_statement: IF EYESHADOW_IDENTIFIER IN EYESHADOW THEN LKEY statements RKEY ELSE LKEY statements RKEY  */
+#line 76 "syntatic.y"
+                                                                                               { printf("\nFound IF statement.\n\n"); }
+#line 1317 "syntatic.tab.c"
+    break;
+
+  case 26: /* if_statement: IF EYELINER_IDENTIFIER IN EYELINER THEN LKEY statements RKEY ELSE LKEY statements RKEY  */
+#line 77 "syntatic.y"
+                                                                                             { printf("\nFound IF statement.\n\n"); }
+#line 1323 "syntatic.tab.c"
+    break;
+
+  case 27: /* if_statement: IF MASCARA_IDENTIFIER IN MASCARA THEN LKEY statements RKEY ELSE LKEY statements RKEY  */
+#line 78 "syntatic.y"
+                                                                                           { printf("\nFound IF statement.\n\n"); }
+#line 1329 "syntatic.tab.c"
+    break;
+
+  case 28: /* if_statement: IF LIPSTICK_IDENTIFIER IN LIPSTICK THEN LKEY statements RKEY ELSE LKEY statements RKEY  */
+#line 79 "syntatic.y"
+                                                                                              { printf("\nFound IF statement.\n\n"); }
+#line 1335 "syntatic.tab.c"
+    break;
+
+  case 29: /* if_statement: IF LIPGLOSS_IDENTIFIER IN LIPGLOSS THEN LKEY statements RKEY ELSE LKEY statements RKEY  */
+#line 80 "syntatic.y"
+                                                                                              { printf("\nFound IF statement.\n\n"); }
+#line 1341 "syntatic.tab.c"
+    break;
+
+  case 30: /* if_statement: IF LIPBALM_IDENTIFIER IN LIPBALM THEN LKEY statements RKEY ELSE LKEY statements RKEY  */
+#line 81 "syntatic.y"
+                                                                                             { printf("\nFound IF statement.\n\n"); }
+#line 1347 "syntatic.tab.c"
     break;
 
   case 31: /* repeat_statement: REPEAT DIGIT TIMES LKEY statements RKEY  */
 #line 85 "syntatic.y"
-                                            { printf("Found repeat statement.\n"); }
-#line 1305 "syntatic.tab.c"
+                                            { printf("\nFound repeat statement.\n\n"); }
+#line 1353 "syntatic.tab.c"
     break;
 
 
-#line 1309 "syntatic.tab.c"
+#line 1357 "syntatic.tab.c"
 
       default: break;
     }

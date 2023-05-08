@@ -2,16 +2,17 @@ makeup gwrm
 foundation: fpowder
 blush: bcream
 eyeshadow: purple
+
+repeat 2 times {
+    eyeliner: gel
+    mascara: lengthening
+}
+
 if bcream in blush then {
     lipstick: lpmatte
     }
 else{
     lipstick: lpsatin
-}
-    
-repeat 2 times {
-    eyeliner: gel
-    mascara: lengthening
 }
 
 final look
