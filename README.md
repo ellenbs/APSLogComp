@@ -110,3 +110,7 @@ gcc -o bison_analyzer syntatic.tab.c lex.yy.c -lfl
 ./flex_analyzer < codigo_exemplo.txt
 ./bison_analyzer < codigo_exemplor.txt
 ```
+### Passando o código exemplo acima para o analyzer:
+![foto](./src/FlexBison1.png)
+![foto](./src/FlexBison2.png)
+![foto](./src/FlexBison3.png)
