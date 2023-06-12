@@ -2,2081 +2,1049 @@ Grammar
 
     0 $accept: program $end
 
-    1 program: MAKEUP statements FINAL_LOOK
+    1 program: statement_list
 
-    2 statements: statement
-    3           | statements statement
+    2 block: LKEY statement_list RKEY
+    3      | LKEY RKEY
 
-    4 statement: foundation_statement
-    5          | blush_statement
-    6          | eyeshadow_statement
-    7          | eyeliner_statement
-    8          | mascara_statement
-    9          | lipstick_statement
-   10          | lipgloss_statement
-   11          | lipbalm_statement
-   12          | if_statement
-   13          | repeat_statement
-   14          | function_statement
+    4 statement_list: statement
+    5               | statement_list statement
 
-   15 foundation_statement: FOUNDATION COLON FOUNDATION_IDENTIFIER
+    6 statement: ITEM IDENTIFIER COLON relexpression
+    7          | IDENTIFIER EQUAL relexpression
+    8          | PRINT LPAREN print_list RPAREN
+    9          | IF LPAREN relexpression RPAREN block
+   10          | IF LPAREN relexpression RPAREN block ELSE block
+   11          | WHILE LPAREN relexpression RPAREN block
+   12          | FUNCTION IDENTIFIER LPAREN parameter_list RPAREN block
+   13          | FUNCTION_CALL IDENTIFIER LPAREN parameter_list RPAREN
+   14          | BUY relexpression
 
-   16 blush_statement: BLUSH COLON BLUSH_IDENTIFIER
+   15 parameter_list: IDENTIFIER
+   16               | parameter_list COMMA IDENTIFIER
 
-   17 eyeshadow_statement: EYESHADOW COLON COLOR_IDENTIFIER
+   17 print_list: relexpression
+   18           | print_list COMMA relexpression
 
-   18 eyeliner_statement: EYELINER COLON EYELINER_IDENTIFIER
+   19 relexpression: expression EQUAL_TO expression
+   20              | expression GT expression
+   21              | expression LT expression
+   22              | expression
 
-   19 mascara_statement: MASCARA COLON MASCARA_IDENTIFIER
+   23 expression: term PLUS term
+   24           | term MINUS term
+   25           | term OR term
+   26           | term
 
-   20 lipstick_statement: LIPSTICK COLON LIPSTICK_IDENTIFIER
+   27 term: factor
+   28     | term MULT factor
+   29     | term DIV factor
+   30     | term AND factor
 
-   21 lipgloss_statement: LIPGLOSS COLON LIPGLOSS_IDENTIFIER
-
-   22 lipbalm_statement: LIPBALM COLON LIPBALM_IDENTIFIER
-
-   23 if_statement: IF BLUSH_IDENTIFIER IN BLUSH THEN LKEY statements RKEY ELSE LKEY statements RKEY
-   24             | IF FOUNDATION_IDENTIFIER IN FOUNDATION THEN LKEY statements RKEY ELSE LKEY statements RKEY
-   25             | IF EYESHADOW_IDENTIFIER IN EYESHADOW THEN LKEY statements RKEY ELSE LKEY statements RKEY
-   26             | IF EYELINER_IDENTIFIER IN EYELINER THEN LKEY statements RKEY ELSE LKEY statements RKEY
-   27             | IF MASCARA_IDENTIFIER IN MASCARA THEN LKEY statements RKEY ELSE LKEY statements RKEY
-   28             | IF LIPSTICK_IDENTIFIER IN LIPSTICK THEN LKEY statements RKEY ELSE LKEY statements RKEY
-   29             | IF LIPGLOSS_IDENTIFIER IN LIPGLOSS THEN LKEY statements RKEY ELSE LKEY statements RKEY
-   30             | IF LIPBALM_IDENTIFIER IN LIPBALM THEN LKEY statements RKEY ELSE LKEY statements RKEY
-
-   31 repeat_statement: REPEAT DIGIT TIMES LKEY statements RKEY
-
-   32 function_statement: DEF IDENTIFIER LKEY statements RKEY
+   31 factor: INTEGER
+   32       | STRING
+   33       | SERIAL
+   34       | IDENTIFIER
+   35       | PLUS factor
+   36       | MINUS factor
+   37       | NOT factor
+   38       | LPAREN relexpression RPAREN
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
     error (256)
-    MAKEUP (258) 1
-    FINAL_LOOK (259) 1
-    REPEAT (260) 31
-    TIMES (261) 31
-    IF (262) 23 24 25 26 27 28 29 30
-    IN (263) 23 24 25 26 27 28 29 30
-    THEN (264) 23 24 25 26 27 28 29 30
-    ELSE (265) 23 24 25 26 27 28 29 30
-    DEF (266) 32
-    FOUNDATION (267) 15 24
-    BLUSH (268) 16 23
-    EYESHADOW (269) 17 25
-    EYELINER (270) 18 26
-    MASCARA (271) 19 27
-    LIPSTICK (272) 20 28
-    LIPGLOSS (273) 21 29
-    LIPBALM (274) 22 30
-    COLOR_IDENTIFIER (275) 17
-    FOUNDATION_IDENTIFIER (276) 15 24
-    BLUSH_IDENTIFIER (277) 16 23
-    EYESHADOW_IDENTIFIER (278) 25
-    LIPSTICK_IDENTIFIER (279) 20 28
-    LIPGLOSS_IDENTIFIER (280) 21 29
-    LIPBALM_IDENTIFIER (281) 22 30
-    MASCARA_IDENTIFIER (282) 19 27
-    EYELINER_IDENTIFIER (283) 18 26
-    DIGIT (284) 31
-    IDENTIFIER (285) 32
-    LKEY (286) 23 24 25 26 27 28 29 30 31 32
-    RKEY (287) 23 24 25 26 27 28 29 30 31 32
-    COLON (288) 15 16 17 18 19 20 21 22
+    IDENTIFIER (258) 6 7 12 13 15 16 34
+    STRING (259) 32
+    INTEGER (260) 31
+    SERIAL (261) 33
+    BUY (262) 14
+    ITEM (263) 6
+    IF (264) 9 10
+    ELSE (265) 10
+    WHILE (266) 11
+    PRINT (267) 8
+    FUNCTION (268) 12
+    FUNCTION_CALL (269) 13
+    MINUS (270) 24 36
+    MULT (271) 28
+    EQUAL (272) 7
+    NOT (273) 37
+    PLUS (274) 23 35
+    DIV (275) 29
+    AND (276) 30
+    OR (277) 25
+    LPAREN (278) 8 9 10 11 12 13 38
+    RPAREN (279) 8 9 10 11 12 13 38
+    LKEY (280) 2 3
+    RKEY (281) 2 3
+    COMMA (282) 16 18
+    COLON (283) 6
+    EQUAL_TO (284) 19
+    GT (285) 20
+    LT (286) 21
 
 
 Nonterminals, with rules where they appear
 
-    $accept (34)
+    $accept (32)
         on left: 0
-    program (35)
+    program (33)
         on left: 1
         on right: 0
-    statements (36)
+    block (34)
         on left: 2 3
-        on right: 1 3 23 24 25 26 27 28 29 30 31 32
-    statement (37)
-        on left: 4 5 6 7 8 9 10 11 12 13 14
-        on right: 2 3
-    foundation_statement (38)
-        on left: 15
-        on right: 4
-    blush_statement (39)
-        on left: 16
-        on right: 5
-    eyeshadow_statement (40)
-        on left: 17
-        on right: 6
-    eyeliner_statement (41)
-        on left: 18
-        on right: 7
-    mascara_statement (42)
-        on left: 19
-        on right: 8
-    lipstick_statement (43)
-        on left: 20
-        on right: 9
-    lipgloss_statement (44)
-        on left: 21
-        on right: 10
-    lipbalm_statement (45)
-        on left: 22
-        on right: 11
-    if_statement (46)
-        on left: 23 24 25 26 27 28 29 30
-        on right: 12
-    repeat_statement (47)
-        on left: 31
-        on right: 13
-    function_statement (48)
-        on left: 32
-        on right: 14
+        on right: 9 10 11 12
+    statement_list (35)
+        on left: 4 5
+        on right: 1 2 5
+    statement (36)
+        on left: 6 7 8 9 10 11 12 13 14
+        on right: 4 5
+    parameter_list (37)
+        on left: 15 16
+        on right: 12 13 16
+    print_list (38)
+        on left: 17 18
+        on right: 8 18
+    relexpression (39)
+        on left: 19 20 21 22
+        on right: 6 7 9 10 11 14 17 18 38
+    expression (40)
+        on left: 23 24 25 26
+        on right: 19 20 21 22
+    term (41)
+        on left: 27 28 29 30
+        on right: 23 24 25 26 28 29 30
+    factor (42)
+        on left: 31 32 33 34 35 36 37 38
+        on right: 27 28 29 30 35 36 37
 
 
 State 0
 
     0 $accept: • program $end
 
-    MAKEUP  shift, and go to state 1
+    IDENTIFIER     shift, and go to state 1
+    BUY            shift, and go to state 2
+    ITEM           shift, and go to state 3
+    IF             shift, and go to state 4
+    WHILE          shift, and go to state 5
+    PRINT          shift, and go to state 6
+    FUNCTION       shift, and go to state 7
+    FUNCTION_CALL  shift, and go to state 8
 
-    program  go to state 2
+    program         go to state 9
+    statement_list  go to state 10
+    statement       go to state 11
 
 
 State 1
 
-    1 program: MAKEUP • statements FINAL_LOOK
+    7 statement: IDENTIFIER • EQUAL relexpression
 
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 14
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
+    EQUAL  shift, and go to state 12
 
 
 State 2
 
-    0 $accept: program • $end
+   14 statement: BUY • relexpression
 
-    $end  shift, and go to state 27
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    relexpression  go to state 21
+    expression     go to state 22
+    term           go to state 23
+    factor         go to state 24
 
 
 State 3
 
-   31 repeat_statement: REPEAT • DIGIT TIMES LKEY statements RKEY
+    6 statement: ITEM • IDENTIFIER COLON relexpression
 
-    DIGIT  shift, and go to state 28
+    IDENTIFIER  shift, and go to state 25
 
 
 State 4
 
-   23 if_statement: IF • BLUSH_IDENTIFIER IN BLUSH THEN LKEY statements RKEY ELSE LKEY statements RKEY
-   24             | IF • FOUNDATION_IDENTIFIER IN FOUNDATION THEN LKEY statements RKEY ELSE LKEY statements RKEY
-   25             | IF • EYESHADOW_IDENTIFIER IN EYESHADOW THEN LKEY statements RKEY ELSE LKEY statements RKEY
-   26             | IF • EYELINER_IDENTIFIER IN EYELINER THEN LKEY statements RKEY ELSE LKEY statements RKEY
-   27             | IF • MASCARA_IDENTIFIER IN MASCARA THEN LKEY statements RKEY ELSE LKEY statements RKEY
-   28             | IF • LIPSTICK_IDENTIFIER IN LIPSTICK THEN LKEY statements RKEY ELSE LKEY statements RKEY
-   29             | IF • LIPGLOSS_IDENTIFIER IN LIPGLOSS THEN LKEY statements RKEY ELSE LKEY statements RKEY
-   30             | IF • LIPBALM_IDENTIFIER IN LIPBALM THEN LKEY statements RKEY ELSE LKEY statements RKEY
+    9 statement: IF • LPAREN relexpression RPAREN block
+   10          | IF • LPAREN relexpression RPAREN block ELSE block
 
-    FOUNDATION_IDENTIFIER  shift, and go to state 29
-    BLUSH_IDENTIFIER       shift, and go to state 30
-    EYESHADOW_IDENTIFIER   shift, and go to state 31
-    LIPSTICK_IDENTIFIER    shift, and go to state 32
-    LIPGLOSS_IDENTIFIER    shift, and go to state 33
-    LIPBALM_IDENTIFIER     shift, and go to state 34
-    MASCARA_IDENTIFIER     shift, and go to state 35
-    EYELINER_IDENTIFIER    shift, and go to state 36
+    LPAREN  shift, and go to state 26
 
 
 State 5
 
-   32 function_statement: DEF • IDENTIFIER LKEY statements RKEY
+   11 statement: WHILE • LPAREN relexpression RPAREN block
 
-    IDENTIFIER  shift, and go to state 37
+    LPAREN  shift, and go to state 27
 
 
 State 6
 
-   15 foundation_statement: FOUNDATION • COLON FOUNDATION_IDENTIFIER
+    8 statement: PRINT • LPAREN print_list RPAREN
 
-    COLON  shift, and go to state 38
+    LPAREN  shift, and go to state 28
 
 
 State 7
 
-   16 blush_statement: BLUSH • COLON BLUSH_IDENTIFIER
+   12 statement: FUNCTION • IDENTIFIER LPAREN parameter_list RPAREN block
 
-    COLON  shift, and go to state 39
+    IDENTIFIER  shift, and go to state 29
 
 
 State 8
 
-   17 eyeshadow_statement: EYESHADOW • COLON COLOR_IDENTIFIER
+   13 statement: FUNCTION_CALL • IDENTIFIER LPAREN parameter_list RPAREN
 
-    COLON  shift, and go to state 40
+    IDENTIFIER  shift, and go to state 30
 
 
 State 9
 
-   18 eyeliner_statement: EYELINER • COLON EYELINER_IDENTIFIER
+    0 $accept: program • $end
 
-    COLON  shift, and go to state 41
+    $end  shift, and go to state 31
 
 
 State 10
 
-   19 mascara_statement: MASCARA • COLON MASCARA_IDENTIFIER
+    1 program: statement_list •
+    5 statement_list: statement_list • statement
 
-    COLON  shift, and go to state 42
+    IDENTIFIER     shift, and go to state 1
+    BUY            shift, and go to state 2
+    ITEM           shift, and go to state 3
+    IF             shift, and go to state 4
+    WHILE          shift, and go to state 5
+    PRINT          shift, and go to state 6
+    FUNCTION       shift, and go to state 7
+    FUNCTION_CALL  shift, and go to state 8
+
+    $default  reduce using rule 1 (program)
+
+    statement  go to state 32
 
 
 State 11
 
-   20 lipstick_statement: LIPSTICK • COLON LIPSTICK_IDENTIFIER
+    4 statement_list: statement •
 
-    COLON  shift, and go to state 43
+    $default  reduce using rule 4 (statement_list)
 
 
 State 12
 
-   21 lipgloss_statement: LIPGLOSS • COLON LIPGLOSS_IDENTIFIER
+    7 statement: IDENTIFIER EQUAL • relexpression
 
-    COLON  shift, and go to state 44
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    relexpression  go to state 33
+    expression     go to state 22
+    term           go to state 23
+    factor         go to state 24
 
 
 State 13
 
-   22 lipbalm_statement: LIPBALM • COLON LIPBALM_IDENTIFIER
+   34 factor: IDENTIFIER •
 
-    COLON  shift, and go to state 45
+    $default  reduce using rule 34 (factor)
 
 
 State 14
 
-    1 program: MAKEUP statements • FINAL_LOOK
-    3 statements: statements • statement
+   32 factor: STRING •
 
-    FINAL_LOOK  shift, and go to state 46
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
+    $default  reduce using rule 32 (factor)
 
 
 State 15
 
-    2 statements: statement •
+   31 factor: INTEGER •
 
-    $default  reduce using rule 2 (statements)
+    $default  reduce using rule 31 (factor)
 
 
 State 16
 
-    4 statement: foundation_statement •
+   33 factor: SERIAL •
 
-    $default  reduce using rule 4 (statement)
+    $default  reduce using rule 33 (factor)
 
 
 State 17
 
-    5 statement: blush_statement •
+   36 factor: MINUS • factor
 
-    $default  reduce using rule 5 (statement)
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    factor  go to state 34
 
 
 State 18
 
-    6 statement: eyeshadow_statement •
+   37 factor: NOT • factor
 
-    $default  reduce using rule 6 (statement)
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    factor  go to state 35
 
 
 State 19
 
-    7 statement: eyeliner_statement •
+   35 factor: PLUS • factor
 
-    $default  reduce using rule 7 (statement)
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    factor  go to state 36
 
 
 State 20
 
-    8 statement: mascara_statement •
+   38 factor: LPAREN • relexpression RPAREN
 
-    $default  reduce using rule 8 (statement)
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    relexpression  go to state 37
+    expression     go to state 22
+    term           go to state 23
+    factor         go to state 24
 
 
 State 21
 
-    9 statement: lipstick_statement •
-
-    $default  reduce using rule 9 (statement)
-
-
-State 22
-
-   10 statement: lipgloss_statement •
-
-    $default  reduce using rule 10 (statement)
-
-
-State 23
-
-   11 statement: lipbalm_statement •
-
-    $default  reduce using rule 11 (statement)
-
-
-State 24
-
-   12 statement: if_statement •
-
-    $default  reduce using rule 12 (statement)
-
-
-State 25
-
-   13 statement: repeat_statement •
-
-    $default  reduce using rule 13 (statement)
-
-
-State 26
-
-   14 statement: function_statement •
+   14 statement: BUY relexpression •
 
     $default  reduce using rule 14 (statement)
 
 
+State 22
+
+   19 relexpression: expression • EQUAL_TO expression
+   20              | expression • GT expression
+   21              | expression • LT expression
+   22              | expression •
+
+    EQUAL_TO  shift, and go to state 38
+    GT        shift, and go to state 39
+    LT        shift, and go to state 40
+
+    $default  reduce using rule 22 (relexpression)
+
+
+State 23
+
+   23 expression: term • PLUS term
+   24           | term • MINUS term
+   25           | term • OR term
+   26           | term •
+   28 term: term • MULT factor
+   29     | term • DIV factor
+   30     | term • AND factor
+
+    MINUS  shift, and go to state 41
+    MULT   shift, and go to state 42
+    PLUS   shift, and go to state 43
+    DIV    shift, and go to state 44
+    AND    shift, and go to state 45
+    OR     shift, and go to state 46
+
+    $default  reduce using rule 26 (expression)
+
+
+State 24
+
+   27 term: factor •
+
+    $default  reduce using rule 27 (term)
+
+
+State 25
+
+    6 statement: ITEM IDENTIFIER • COLON relexpression
+
+    COLON  shift, and go to state 47
+
+
+State 26
+
+    9 statement: IF LPAREN • relexpression RPAREN block
+   10          | IF LPAREN • relexpression RPAREN block ELSE block
+
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    relexpression  go to state 48
+    expression     go to state 22
+    term           go to state 23
+    factor         go to state 24
+
+
 State 27
+
+   11 statement: WHILE LPAREN • relexpression RPAREN block
+
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    relexpression  go to state 49
+    expression     go to state 22
+    term           go to state 23
+    factor         go to state 24
+
+
+State 28
+
+    8 statement: PRINT LPAREN • print_list RPAREN
+
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    print_list     go to state 50
+    relexpression  go to state 51
+    expression     go to state 22
+    term           go to state 23
+    factor         go to state 24
+
+
+State 29
+
+   12 statement: FUNCTION IDENTIFIER • LPAREN parameter_list RPAREN block
+
+    LPAREN  shift, and go to state 52
+
+
+State 30
+
+   13 statement: FUNCTION_CALL IDENTIFIER • LPAREN parameter_list RPAREN
+
+    LPAREN  shift, and go to state 53
+
+
+State 31
 
     0 $accept: program $end •
 
     $default  accept
 
 
-State 28
-
-   31 repeat_statement: REPEAT DIGIT • TIMES LKEY statements RKEY
-
-    TIMES  shift, and go to state 48
-
-
-State 29
-
-   24 if_statement: IF FOUNDATION_IDENTIFIER • IN FOUNDATION THEN LKEY statements RKEY ELSE LKEY statements RKEY
-
-    IN  shift, and go to state 49
-
-
-State 30
-
-   23 if_statement: IF BLUSH_IDENTIFIER • IN BLUSH THEN LKEY statements RKEY ELSE LKEY statements RKEY
-
-    IN  shift, and go to state 50
-
-
-State 31
-
-   25 if_statement: IF EYESHADOW_IDENTIFIER • IN EYESHADOW THEN LKEY statements RKEY ELSE LKEY statements RKEY
-
-    IN  shift, and go to state 51
-
-
 State 32
 
-   28 if_statement: IF LIPSTICK_IDENTIFIER • IN LIPSTICK THEN LKEY statements RKEY ELSE LKEY statements RKEY
+    5 statement_list: statement_list statement •
 
-    IN  shift, and go to state 52
+    $default  reduce using rule 5 (statement_list)
 
 
 State 33
 
-   29 if_statement: IF LIPGLOSS_IDENTIFIER • IN LIPGLOSS THEN LKEY statements RKEY ELSE LKEY statements RKEY
+    7 statement: IDENTIFIER EQUAL relexpression •
 
-    IN  shift, and go to state 53
+    $default  reduce using rule 7 (statement)
 
 
 State 34
 
-   30 if_statement: IF LIPBALM_IDENTIFIER • IN LIPBALM THEN LKEY statements RKEY ELSE LKEY statements RKEY
+   36 factor: MINUS factor •
 
-    IN  shift, and go to state 54
+    $default  reduce using rule 36 (factor)
 
 
 State 35
 
-   27 if_statement: IF MASCARA_IDENTIFIER • IN MASCARA THEN LKEY statements RKEY ELSE LKEY statements RKEY
+   37 factor: NOT factor •
 
-    IN  shift, and go to state 55
+    $default  reduce using rule 37 (factor)
 
 
 State 36
 
-   26 if_statement: IF EYELINER_IDENTIFIER • IN EYELINER THEN LKEY statements RKEY ELSE LKEY statements RKEY
+   35 factor: PLUS factor •
 
-    IN  shift, and go to state 56
+    $default  reduce using rule 35 (factor)
 
 
 State 37
 
-   32 function_statement: DEF IDENTIFIER • LKEY statements RKEY
+   38 factor: LPAREN relexpression • RPAREN
 
-    LKEY  shift, and go to state 57
+    RPAREN  shift, and go to state 54
 
 
 State 38
 
-   15 foundation_statement: FOUNDATION COLON • FOUNDATION_IDENTIFIER
+   19 relexpression: expression EQUAL_TO • expression
 
-    FOUNDATION_IDENTIFIER  shift, and go to state 58
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    expression  go to state 55
+    term        go to state 23
+    factor      go to state 24
 
 
 State 39
 
-   16 blush_statement: BLUSH COLON • BLUSH_IDENTIFIER
+   20 relexpression: expression GT • expression
 
-    BLUSH_IDENTIFIER  shift, and go to state 59
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    expression  go to state 56
+    term        go to state 23
+    factor      go to state 24
 
 
 State 40
 
-   17 eyeshadow_statement: EYESHADOW COLON • COLOR_IDENTIFIER
+   21 relexpression: expression LT • expression
 
-    COLOR_IDENTIFIER  shift, and go to state 60
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    expression  go to state 57
+    term        go to state 23
+    factor      go to state 24
 
 
 State 41
 
-   18 eyeliner_statement: EYELINER COLON • EYELINER_IDENTIFIER
+   24 expression: term MINUS • term
 
-    EYELINER_IDENTIFIER  shift, and go to state 61
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    term    go to state 58
+    factor  go to state 24
 
 
 State 42
 
-   19 mascara_statement: MASCARA COLON • MASCARA_IDENTIFIER
+   28 term: term MULT • factor
 
-    MASCARA_IDENTIFIER  shift, and go to state 62
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    factor  go to state 59
 
 
 State 43
 
-   20 lipstick_statement: LIPSTICK COLON • LIPSTICK_IDENTIFIER
+   23 expression: term PLUS • term
 
-    LIPSTICK_IDENTIFIER  shift, and go to state 63
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    term    go to state 60
+    factor  go to state 24
 
 
 State 44
 
-   21 lipgloss_statement: LIPGLOSS COLON • LIPGLOSS_IDENTIFIER
+   29 term: term DIV • factor
 
-    LIPGLOSS_IDENTIFIER  shift, and go to state 64
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    factor  go to state 61
 
 
 State 45
 
-   22 lipbalm_statement: LIPBALM COLON • LIPBALM_IDENTIFIER
+   30 term: term AND • factor
 
-    LIPBALM_IDENTIFIER  shift, and go to state 65
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    factor  go to state 62
 
 
 State 46
 
-    1 program: MAKEUP statements FINAL_LOOK •
+   25 expression: term OR • term
 
-    $default  reduce using rule 1 (program)
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    term    go to state 63
+    factor  go to state 24
 
 
 State 47
 
-    3 statements: statements statement •
+    6 statement: ITEM IDENTIFIER COLON • relexpression
 
-    $default  reduce using rule 3 (statements)
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    relexpression  go to state 64
+    expression     go to state 22
+    term           go to state 23
+    factor         go to state 24
 
 
 State 48
 
-   31 repeat_statement: REPEAT DIGIT TIMES • LKEY statements RKEY
+    9 statement: IF LPAREN relexpression • RPAREN block
+   10          | IF LPAREN relexpression • RPAREN block ELSE block
 
-    LKEY  shift, and go to state 66
+    RPAREN  shift, and go to state 65
 
 
 State 49
 
-   24 if_statement: IF FOUNDATION_IDENTIFIER IN • FOUNDATION THEN LKEY statements RKEY ELSE LKEY statements RKEY
+   11 statement: WHILE LPAREN relexpression • RPAREN block
 
-    FOUNDATION  shift, and go to state 67
+    RPAREN  shift, and go to state 66
 
 
 State 50
 
-   23 if_statement: IF BLUSH_IDENTIFIER IN • BLUSH THEN LKEY statements RKEY ELSE LKEY statements RKEY
+    8 statement: PRINT LPAREN print_list • RPAREN
+   18 print_list: print_list • COMMA relexpression
 
-    BLUSH  shift, and go to state 68
+    RPAREN  shift, and go to state 67
+    COMMA   shift, and go to state 68
 
 
 State 51
 
-   25 if_statement: IF EYESHADOW_IDENTIFIER IN • EYESHADOW THEN LKEY statements RKEY ELSE LKEY statements RKEY
+   17 print_list: relexpression •
 
-    EYESHADOW  shift, and go to state 69
+    $default  reduce using rule 17 (print_list)
 
 
 State 52
 
-   28 if_statement: IF LIPSTICK_IDENTIFIER IN • LIPSTICK THEN LKEY statements RKEY ELSE LKEY statements RKEY
+   12 statement: FUNCTION IDENTIFIER LPAREN • parameter_list RPAREN block
 
-    LIPSTICK  shift, and go to state 70
+    IDENTIFIER  shift, and go to state 69
+
+    parameter_list  go to state 70
 
 
 State 53
 
-   29 if_statement: IF LIPGLOSS_IDENTIFIER IN • LIPGLOSS THEN LKEY statements RKEY ELSE LKEY statements RKEY
+   13 statement: FUNCTION_CALL IDENTIFIER LPAREN • parameter_list RPAREN
 
-    LIPGLOSS  shift, and go to state 71
+    IDENTIFIER  shift, and go to state 69
+
+    parameter_list  go to state 71
 
 
 State 54
 
-   30 if_statement: IF LIPBALM_IDENTIFIER IN • LIPBALM THEN LKEY statements RKEY ELSE LKEY statements RKEY
+   38 factor: LPAREN relexpression RPAREN •
 
-    LIPBALM  shift, and go to state 72
+    $default  reduce using rule 38 (factor)
 
 
 State 55
 
-   27 if_statement: IF MASCARA_IDENTIFIER IN • MASCARA THEN LKEY statements RKEY ELSE LKEY statements RKEY
+   19 relexpression: expression EQUAL_TO expression •
 
-    MASCARA  shift, and go to state 73
+    $default  reduce using rule 19 (relexpression)
 
 
 State 56
 
-   26 if_statement: IF EYELINER_IDENTIFIER IN • EYELINER THEN LKEY statements RKEY ELSE LKEY statements RKEY
+   20 relexpression: expression GT expression •
 
-    EYELINER  shift, and go to state 74
+    $default  reduce using rule 20 (relexpression)
 
 
 State 57
 
-   32 function_statement: DEF IDENTIFIER LKEY • statements RKEY
+   21 relexpression: expression LT expression •
 
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 75
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
+    $default  reduce using rule 21 (relexpression)
 
 
 State 58
 
-   15 foundation_statement: FOUNDATION COLON FOUNDATION_IDENTIFIER •
+   24 expression: term MINUS term •
+   28 term: term • MULT factor
+   29     | term • DIV factor
+   30     | term • AND factor
 
-    $default  reduce using rule 15 (foundation_statement)
+    MULT  shift, and go to state 42
+    DIV   shift, and go to state 44
+    AND   shift, and go to state 45
+
+    $default  reduce using rule 24 (expression)
 
 
 State 59
 
-   16 blush_statement: BLUSH COLON BLUSH_IDENTIFIER •
+   28 term: term MULT factor •
 
-    $default  reduce using rule 16 (blush_statement)
+    $default  reduce using rule 28 (term)
 
 
 State 60
 
-   17 eyeshadow_statement: EYESHADOW COLON COLOR_IDENTIFIER •
+   23 expression: term PLUS term •
+   28 term: term • MULT factor
+   29     | term • DIV factor
+   30     | term • AND factor
 
-    $default  reduce using rule 17 (eyeshadow_statement)
+    MULT  shift, and go to state 42
+    DIV   shift, and go to state 44
+    AND   shift, and go to state 45
+
+    $default  reduce using rule 23 (expression)
 
 
 State 61
 
-   18 eyeliner_statement: EYELINER COLON EYELINER_IDENTIFIER •
+   29 term: term DIV factor •
 
-    $default  reduce using rule 18 (eyeliner_statement)
+    $default  reduce using rule 29 (term)
 
 
 State 62
 
-   19 mascara_statement: MASCARA COLON MASCARA_IDENTIFIER •
+   30 term: term AND factor •
 
-    $default  reduce using rule 19 (mascara_statement)
+    $default  reduce using rule 30 (term)
 
 
 State 63
 
-   20 lipstick_statement: LIPSTICK COLON LIPSTICK_IDENTIFIER •
+   25 expression: term OR term •
+   28 term: term • MULT factor
+   29     | term • DIV factor
+   30     | term • AND factor
 
-    $default  reduce using rule 20 (lipstick_statement)
+    MULT  shift, and go to state 42
+    DIV   shift, and go to state 44
+    AND   shift, and go to state 45
+
+    $default  reduce using rule 25 (expression)
 
 
 State 64
 
-   21 lipgloss_statement: LIPGLOSS COLON LIPGLOSS_IDENTIFIER •
+    6 statement: ITEM IDENTIFIER COLON relexpression •
 
-    $default  reduce using rule 21 (lipgloss_statement)
+    $default  reduce using rule 6 (statement)
 
 
 State 65
 
-   22 lipbalm_statement: LIPBALM COLON LIPBALM_IDENTIFIER •
+    9 statement: IF LPAREN relexpression RPAREN • block
+   10          | IF LPAREN relexpression RPAREN • block ELSE block
 
-    $default  reduce using rule 22 (lipbalm_statement)
+    LKEY  shift, and go to state 72
+
+    block  go to state 73
 
 
 State 66
 
-   31 repeat_statement: REPEAT DIGIT TIMES LKEY • statements RKEY
+   11 statement: WHILE LPAREN relexpression RPAREN • block
 
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
+    LKEY  shift, and go to state 72
 
-    statements            go to state 76
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
+    block  go to state 74
 
 
 State 67
 
-   24 if_statement: IF FOUNDATION_IDENTIFIER IN FOUNDATION • THEN LKEY statements RKEY ELSE LKEY statements RKEY
+    8 statement: PRINT LPAREN print_list RPAREN •
 
-    THEN  shift, and go to state 77
+    $default  reduce using rule 8 (statement)
 
 
 State 68
 
-   23 if_statement: IF BLUSH_IDENTIFIER IN BLUSH • THEN LKEY statements RKEY ELSE LKEY statements RKEY
+   18 print_list: print_list COMMA • relexpression
 
-    THEN  shift, and go to state 78
+    IDENTIFIER  shift, and go to state 13
+    STRING      shift, and go to state 14
+    INTEGER     shift, and go to state 15
+    SERIAL      shift, and go to state 16
+    MINUS       shift, and go to state 17
+    NOT         shift, and go to state 18
+    PLUS        shift, and go to state 19
+    LPAREN      shift, and go to state 20
+
+    relexpression  go to state 75
+    expression     go to state 22
+    term           go to state 23
+    factor         go to state 24
 
 
 State 69
 
-   25 if_statement: IF EYESHADOW_IDENTIFIER IN EYESHADOW • THEN LKEY statements RKEY ELSE LKEY statements RKEY
+   15 parameter_list: IDENTIFIER •
 
-    THEN  shift, and go to state 79
+    $default  reduce using rule 15 (parameter_list)
 
 
 State 70
 
-   28 if_statement: IF LIPSTICK_IDENTIFIER IN LIPSTICK • THEN LKEY statements RKEY ELSE LKEY statements RKEY
+   12 statement: FUNCTION IDENTIFIER LPAREN parameter_list • RPAREN block
+   16 parameter_list: parameter_list • COMMA IDENTIFIER
 
-    THEN  shift, and go to state 80
+    RPAREN  shift, and go to state 76
+    COMMA   shift, and go to state 77
 
 
 State 71
 
-   29 if_statement: IF LIPGLOSS_IDENTIFIER IN LIPGLOSS • THEN LKEY statements RKEY ELSE LKEY statements RKEY
+   13 statement: FUNCTION_CALL IDENTIFIER LPAREN parameter_list • RPAREN
+   16 parameter_list: parameter_list • COMMA IDENTIFIER
 
-    THEN  shift, and go to state 81
+    RPAREN  shift, and go to state 78
+    COMMA   shift, and go to state 77
 
 
 State 72
 
-   30 if_statement: IF LIPBALM_IDENTIFIER IN LIPBALM • THEN LKEY statements RKEY ELSE LKEY statements RKEY
+    2 block: LKEY • statement_list RKEY
+    3      | LKEY • RKEY
 
-    THEN  shift, and go to state 82
+    IDENTIFIER     shift, and go to state 1
+    BUY            shift, and go to state 2
+    ITEM           shift, and go to state 3
+    IF             shift, and go to state 4
+    WHILE          shift, and go to state 5
+    PRINT          shift, and go to state 6
+    FUNCTION       shift, and go to state 7
+    FUNCTION_CALL  shift, and go to state 8
+    RKEY           shift, and go to state 79
+
+    statement_list  go to state 80
+    statement       go to state 11
 
 
 State 73
 
-   27 if_statement: IF MASCARA_IDENTIFIER IN MASCARA • THEN LKEY statements RKEY ELSE LKEY statements RKEY
+    9 statement: IF LPAREN relexpression RPAREN block •
+   10          | IF LPAREN relexpression RPAREN block • ELSE block
 
-    THEN  shift, and go to state 83
+    ELSE  shift, and go to state 81
+
+    $default  reduce using rule 9 (statement)
 
 
 State 74
 
-   26 if_statement: IF EYELINER_IDENTIFIER IN EYELINER • THEN LKEY statements RKEY ELSE LKEY statements RKEY
+   11 statement: WHILE LPAREN relexpression RPAREN block •
 
-    THEN  shift, and go to state 84
+    $default  reduce using rule 11 (statement)
 
 
 State 75
 
-    3 statements: statements • statement
-   32 function_statement: DEF IDENTIFIER LKEY statements • RKEY
+   18 print_list: print_list COMMA relexpression •
 
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 85
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
+    $default  reduce using rule 18 (print_list)
 
 
 State 76
 
-    3 statements: statements • statement
-   31 repeat_statement: REPEAT DIGIT TIMES LKEY statements • RKEY
+   12 statement: FUNCTION IDENTIFIER LPAREN parameter_list RPAREN • block
 
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 86
+    LKEY  shift, and go to state 72
 
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
+    block  go to state 82
 
 
 State 77
 
-   24 if_statement: IF FOUNDATION_IDENTIFIER IN FOUNDATION THEN • LKEY statements RKEY ELSE LKEY statements RKEY
+   16 parameter_list: parameter_list COMMA • IDENTIFIER
 
-    LKEY  shift, and go to state 87
+    IDENTIFIER  shift, and go to state 83
 
 
 State 78
 
-   23 if_statement: IF BLUSH_IDENTIFIER IN BLUSH THEN • LKEY statements RKEY ELSE LKEY statements RKEY
+   13 statement: FUNCTION_CALL IDENTIFIER LPAREN parameter_list RPAREN •
 
-    LKEY  shift, and go to state 88
+    $default  reduce using rule 13 (statement)
 
 
 State 79
 
-   25 if_statement: IF EYESHADOW_IDENTIFIER IN EYESHADOW THEN • LKEY statements RKEY ELSE LKEY statements RKEY
+    3 block: LKEY RKEY •
 
-    LKEY  shift, and go to state 89
+    $default  reduce using rule 3 (block)
 
 
 State 80
 
-   28 if_statement: IF LIPSTICK_IDENTIFIER IN LIPSTICK THEN • LKEY statements RKEY ELSE LKEY statements RKEY
+    2 block: LKEY statement_list • RKEY
+    5 statement_list: statement_list • statement
 
-    LKEY  shift, and go to state 90
+    IDENTIFIER     shift, and go to state 1
+    BUY            shift, and go to state 2
+    ITEM           shift, and go to state 3
+    IF             shift, and go to state 4
+    WHILE          shift, and go to state 5
+    PRINT          shift, and go to state 6
+    FUNCTION       shift, and go to state 7
+    FUNCTION_CALL  shift, and go to state 8
+    RKEY           shift, and go to state 84
+
+    statement  go to state 32
 
 
 State 81
 
-   29 if_statement: IF LIPGLOSS_IDENTIFIER IN LIPGLOSS THEN • LKEY statements RKEY ELSE LKEY statements RKEY
+   10 statement: IF LPAREN relexpression RPAREN block ELSE • block
 
-    LKEY  shift, and go to state 91
+    LKEY  shift, and go to state 72
+
+    block  go to state 85
 
 
 State 82
 
-   30 if_statement: IF LIPBALM_IDENTIFIER IN LIPBALM THEN • LKEY statements RKEY ELSE LKEY statements RKEY
+   12 statement: FUNCTION IDENTIFIER LPAREN parameter_list RPAREN block •
 
-    LKEY  shift, and go to state 92
+    $default  reduce using rule 12 (statement)
 
 
 State 83
 
-   27 if_statement: IF MASCARA_IDENTIFIER IN MASCARA THEN • LKEY statements RKEY ELSE LKEY statements RKEY
+   16 parameter_list: parameter_list COMMA IDENTIFIER •
 
-    LKEY  shift, and go to state 93
+    $default  reduce using rule 16 (parameter_list)
 
 
 State 84
 
-   26 if_statement: IF EYELINER_IDENTIFIER IN EYELINER THEN • LKEY statements RKEY ELSE LKEY statements RKEY
+    2 block: LKEY statement_list RKEY •
 
-    LKEY  shift, and go to state 94
+    $default  reduce using rule 2 (block)
 
 
 State 85
 
-   32 function_statement: DEF IDENTIFIER LKEY statements RKEY •
+   10 statement: IF LPAREN relexpression RPAREN block ELSE block •
 
-    $default  reduce using rule 32 (function_statement)
-
-
-State 86
-
-   31 repeat_statement: REPEAT DIGIT TIMES LKEY statements RKEY •
-
-    $default  reduce using rule 31 (repeat_statement)
-
-
-State 87
-
-   24 if_statement: IF FOUNDATION_IDENTIFIER IN FOUNDATION THEN LKEY • statements RKEY ELSE LKEY statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 95
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 88
-
-   23 if_statement: IF BLUSH_IDENTIFIER IN BLUSH THEN LKEY • statements RKEY ELSE LKEY statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 96
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 89
-
-   25 if_statement: IF EYESHADOW_IDENTIFIER IN EYESHADOW THEN LKEY • statements RKEY ELSE LKEY statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 97
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 90
-
-   28 if_statement: IF LIPSTICK_IDENTIFIER IN LIPSTICK THEN LKEY • statements RKEY ELSE LKEY statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 98
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 91
-
-   29 if_statement: IF LIPGLOSS_IDENTIFIER IN LIPGLOSS THEN LKEY • statements RKEY ELSE LKEY statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 99
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 92
-
-   30 if_statement: IF LIPBALM_IDENTIFIER IN LIPBALM THEN LKEY • statements RKEY ELSE LKEY statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 100
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 93
-
-   27 if_statement: IF MASCARA_IDENTIFIER IN MASCARA THEN LKEY • statements RKEY ELSE LKEY statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 101
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 94
-
-   26 if_statement: IF EYELINER_IDENTIFIER IN EYELINER THEN LKEY • statements RKEY ELSE LKEY statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 102
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 95
-
-    3 statements: statements • statement
-   24 if_statement: IF FOUNDATION_IDENTIFIER IN FOUNDATION THEN LKEY statements • RKEY ELSE LKEY statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 103
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 96
-
-    3 statements: statements • statement
-   23 if_statement: IF BLUSH_IDENTIFIER IN BLUSH THEN LKEY statements • RKEY ELSE LKEY statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 104
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 97
-
-    3 statements: statements • statement
-   25 if_statement: IF EYESHADOW_IDENTIFIER IN EYESHADOW THEN LKEY statements • RKEY ELSE LKEY statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 105
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 98
-
-    3 statements: statements • statement
-   28 if_statement: IF LIPSTICK_IDENTIFIER IN LIPSTICK THEN LKEY statements • RKEY ELSE LKEY statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 106
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 99
-
-    3 statements: statements • statement
-   29 if_statement: IF LIPGLOSS_IDENTIFIER IN LIPGLOSS THEN LKEY statements • RKEY ELSE LKEY statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 107
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 100
-
-    3 statements: statements • statement
-   30 if_statement: IF LIPBALM_IDENTIFIER IN LIPBALM THEN LKEY statements • RKEY ELSE LKEY statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 108
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 101
-
-    3 statements: statements • statement
-   27 if_statement: IF MASCARA_IDENTIFIER IN MASCARA THEN LKEY statements • RKEY ELSE LKEY statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 109
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 102
-
-    3 statements: statements • statement
-   26 if_statement: IF EYELINER_IDENTIFIER IN EYELINER THEN LKEY statements • RKEY ELSE LKEY statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 110
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 103
-
-   24 if_statement: IF FOUNDATION_IDENTIFIER IN FOUNDATION THEN LKEY statements RKEY • ELSE LKEY statements RKEY
-
-    ELSE  shift, and go to state 111
-
-
-State 104
-
-   23 if_statement: IF BLUSH_IDENTIFIER IN BLUSH THEN LKEY statements RKEY • ELSE LKEY statements RKEY
-
-    ELSE  shift, and go to state 112
-
-
-State 105
-
-   25 if_statement: IF EYESHADOW_IDENTIFIER IN EYESHADOW THEN LKEY statements RKEY • ELSE LKEY statements RKEY
-
-    ELSE  shift, and go to state 113
-
-
-State 106
-
-   28 if_statement: IF LIPSTICK_IDENTIFIER IN LIPSTICK THEN LKEY statements RKEY • ELSE LKEY statements RKEY
-
-    ELSE  shift, and go to state 114
-
-
-State 107
-
-   29 if_statement: IF LIPGLOSS_IDENTIFIER IN LIPGLOSS THEN LKEY statements RKEY • ELSE LKEY statements RKEY
-
-    ELSE  shift, and go to state 115
-
-
-State 108
-
-   30 if_statement: IF LIPBALM_IDENTIFIER IN LIPBALM THEN LKEY statements RKEY • ELSE LKEY statements RKEY
-
-    ELSE  shift, and go to state 116
-
-
-State 109
-
-   27 if_statement: IF MASCARA_IDENTIFIER IN MASCARA THEN LKEY statements RKEY • ELSE LKEY statements RKEY
-
-    ELSE  shift, and go to state 117
-
-
-State 110
-
-   26 if_statement: IF EYELINER_IDENTIFIER IN EYELINER THEN LKEY statements RKEY • ELSE LKEY statements RKEY
-
-    ELSE  shift, and go to state 118
-
-
-State 111
-
-   24 if_statement: IF FOUNDATION_IDENTIFIER IN FOUNDATION THEN LKEY statements RKEY ELSE • LKEY statements RKEY
-
-    LKEY  shift, and go to state 119
-
-
-State 112
-
-   23 if_statement: IF BLUSH_IDENTIFIER IN BLUSH THEN LKEY statements RKEY ELSE • LKEY statements RKEY
-
-    LKEY  shift, and go to state 120
-
-
-State 113
-
-   25 if_statement: IF EYESHADOW_IDENTIFIER IN EYESHADOW THEN LKEY statements RKEY ELSE • LKEY statements RKEY
-
-    LKEY  shift, and go to state 121
-
-
-State 114
-
-   28 if_statement: IF LIPSTICK_IDENTIFIER IN LIPSTICK THEN LKEY statements RKEY ELSE • LKEY statements RKEY
-
-    LKEY  shift, and go to state 122
-
-
-State 115
-
-   29 if_statement: IF LIPGLOSS_IDENTIFIER IN LIPGLOSS THEN LKEY statements RKEY ELSE • LKEY statements RKEY
-
-    LKEY  shift, and go to state 123
-
-
-State 116
-
-   30 if_statement: IF LIPBALM_IDENTIFIER IN LIPBALM THEN LKEY statements RKEY ELSE • LKEY statements RKEY
-
-    LKEY  shift, and go to state 124
-
-
-State 117
-
-   27 if_statement: IF MASCARA_IDENTIFIER IN MASCARA THEN LKEY statements RKEY ELSE • LKEY statements RKEY
-
-    LKEY  shift, and go to state 125
-
-
-State 118
-
-   26 if_statement: IF EYELINER_IDENTIFIER IN EYELINER THEN LKEY statements RKEY ELSE • LKEY statements RKEY
-
-    LKEY  shift, and go to state 126
-
-
-State 119
-
-   24 if_statement: IF FOUNDATION_IDENTIFIER IN FOUNDATION THEN LKEY statements RKEY ELSE LKEY • statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 127
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 120
-
-   23 if_statement: IF BLUSH_IDENTIFIER IN BLUSH THEN LKEY statements RKEY ELSE LKEY • statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 128
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 121
-
-   25 if_statement: IF EYESHADOW_IDENTIFIER IN EYESHADOW THEN LKEY statements RKEY ELSE LKEY • statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 129
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 122
-
-   28 if_statement: IF LIPSTICK_IDENTIFIER IN LIPSTICK THEN LKEY statements RKEY ELSE LKEY • statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 130
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 123
-
-   29 if_statement: IF LIPGLOSS_IDENTIFIER IN LIPGLOSS THEN LKEY statements RKEY ELSE LKEY • statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 131
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 124
-
-   30 if_statement: IF LIPBALM_IDENTIFIER IN LIPBALM THEN LKEY statements RKEY ELSE LKEY • statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 132
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 125
-
-   27 if_statement: IF MASCARA_IDENTIFIER IN MASCARA THEN LKEY statements RKEY ELSE LKEY • statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 133
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 126
-
-   26 if_statement: IF EYELINER_IDENTIFIER IN EYELINER THEN LKEY statements RKEY ELSE LKEY • statements RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-
-    statements            go to state 134
-    statement             go to state 15
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 127
-
-    3 statements: statements • statement
-   24 if_statement: IF FOUNDATION_IDENTIFIER IN FOUNDATION THEN LKEY statements RKEY ELSE LKEY statements • RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 135
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 128
-
-    3 statements: statements • statement
-   23 if_statement: IF BLUSH_IDENTIFIER IN BLUSH THEN LKEY statements RKEY ELSE LKEY statements • RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 136
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 129
-
-    3 statements: statements • statement
-   25 if_statement: IF EYESHADOW_IDENTIFIER IN EYESHADOW THEN LKEY statements RKEY ELSE LKEY statements • RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 137
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 130
-
-    3 statements: statements • statement
-   28 if_statement: IF LIPSTICK_IDENTIFIER IN LIPSTICK THEN LKEY statements RKEY ELSE LKEY statements • RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 138
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 131
-
-    3 statements: statements • statement
-   29 if_statement: IF LIPGLOSS_IDENTIFIER IN LIPGLOSS THEN LKEY statements RKEY ELSE LKEY statements • RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 139
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 132
-
-    3 statements: statements • statement
-   30 if_statement: IF LIPBALM_IDENTIFIER IN LIPBALM THEN LKEY statements RKEY ELSE LKEY statements • RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 140
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 133
-
-    3 statements: statements • statement
-   27 if_statement: IF MASCARA_IDENTIFIER IN MASCARA THEN LKEY statements RKEY ELSE LKEY statements • RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 141
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 134
-
-    3 statements: statements • statement
-   26 if_statement: IF EYELINER_IDENTIFIER IN EYELINER THEN LKEY statements RKEY ELSE LKEY statements • RKEY
-
-    REPEAT      shift, and go to state 3
-    IF          shift, and go to state 4
-    DEF         shift, and go to state 5
-    FOUNDATION  shift, and go to state 6
-    BLUSH       shift, and go to state 7
-    EYESHADOW   shift, and go to state 8
-    EYELINER    shift, and go to state 9
-    MASCARA     shift, and go to state 10
-    LIPSTICK    shift, and go to state 11
-    LIPGLOSS    shift, and go to state 12
-    LIPBALM     shift, and go to state 13
-    RKEY        shift, and go to state 142
-
-    statement             go to state 47
-    foundation_statement  go to state 16
-    blush_statement       go to state 17
-    eyeshadow_statement   go to state 18
-    eyeliner_statement    go to state 19
-    mascara_statement     go to state 20
-    lipstick_statement    go to state 21
-    lipgloss_statement    go to state 22
-    lipbalm_statement     go to state 23
-    if_statement          go to state 24
-    repeat_statement      go to state 25
-    function_statement    go to state 26
-
-
-State 135
-
-   24 if_statement: IF FOUNDATION_IDENTIFIER IN FOUNDATION THEN LKEY statements RKEY ELSE LKEY statements RKEY •
-
-    $default  reduce using rule 24 (if_statement)
-
-
-State 136
-
-   23 if_statement: IF BLUSH_IDENTIFIER IN BLUSH THEN LKEY statements RKEY ELSE LKEY statements RKEY •
-
-    $default  reduce using rule 23 (if_statement)
-
-
-State 137
-
-   25 if_statement: IF EYESHADOW_IDENTIFIER IN EYESHADOW THEN LKEY statements RKEY ELSE LKEY statements RKEY •
-
-    $default  reduce using rule 25 (if_statement)
-
-
-State 138
-
-   28 if_statement: IF LIPSTICK_IDENTIFIER IN LIPSTICK THEN LKEY statements RKEY ELSE LKEY statements RKEY •
-
-    $default  reduce using rule 28 (if_statement)
-
-
-State 139
-
-   29 if_statement: IF LIPGLOSS_IDENTIFIER IN LIPGLOSS THEN LKEY statements RKEY ELSE LKEY statements RKEY •
-
-    $default  reduce using rule 29 (if_statement)
-
-
-State 140
-
-   30 if_statement: IF LIPBALM_IDENTIFIER IN LIPBALM THEN LKEY statements RKEY ELSE LKEY statements RKEY •
-
-    $default  reduce using rule 30 (if_statement)
-
-
-State 141
-
-   27 if_statement: IF MASCARA_IDENTIFIER IN MASCARA THEN LKEY statements RKEY ELSE LKEY statements RKEY •
-
-    $default  reduce using rule 27 (if_statement)
-
-
-State 142
-
-   26 if_statement: IF EYELINER_IDENTIFIER IN EYELINER THEN LKEY statements RKEY ELSE LKEY statements RKEY •
-
-    $default  reduce using rule 26 (if_statement)
+    $default  reduce using rule 10 (statement)

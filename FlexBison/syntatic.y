@@ -27,7 +27,7 @@ statement_list : statement
                | statement_list statement
                ;
         
-statement : POSITION IDENTIFIER COLON relexpression
+statement : ITEM IDENTIFIER COLON relexpression
           | IDENTIFIER EQUAL relexpression
           | PRINT LPAREN print_list RPAREN
           | IF LPAREN relexpression RPAREN block
