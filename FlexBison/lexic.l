@@ -12,7 +12,7 @@
 "final look"            { printf("FINAL_LOOK\n"); return FINAL_LOOK;}
 
 "repeat"                { printf("REPEAT\n"); return REPEAT;}
-"times"			{ printf("TIMES\n"); return TIMES;}
+"times"			        { printf("TIMES\n"); return TIMES;}
 "if"                    { printf("IF\n"); return IF;}
 "in"                    { printf("IN\n"); return IN;}
 "then"                  { printf("THEN\n"); return THEN;}
