@@ -10,7 +10,7 @@ void yyerror(const char *s) { printf("ERROR: %s\n", s); }
 
 %token MAKEUP FINAL_LOOK REPEAT TIMES IF IN THEN ELSE DEF FOUNDATION BLUSH EYESHADOW EYELINER MASCARA LIPSTICK LIPGLOSS LIPBALM
 %token COLOR_IDENTIFIER FOUNDATION_IDENTIFIER BLUSH_IDENTIFIER EYESHADOW_IDENTIFIER LIPSTICK_IDENTIFIER LIPGLOSS_IDENTIFIER LIPBALM_IDENTIFIER MASCARA_IDENTIFIER EYELINER_IDENTIFIER
-%token DIGIT IDENTIFIER LKEY RKEY COLON FUNCTION_NAME
+%token DIGIT IDENTIFIER LKEY RKEY COLON
 
 %start program
 
@@ -36,6 +36,7 @@ statement:
     | lipbalm_statement
     | if_statement
     | repeat_statement
+    | function_statement
     ;
 
 foundation_statement:
@@ -86,7 +87,7 @@ repeat_statement:
     ;
 
 function_statement:
-    DEF FUNCTION_NAME LKEY statements RKEY { printf("\nFound function statement.\n\n"); }
+    DEF IDENTIFIER LKEY statements RKEY { printf("\nFound function statement.\n\n"); }
     ;
 
 %%

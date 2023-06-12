@@ -1,4 +1,5 @@
 makeup gwrm
+def make {
 foundation: fpowder
 blush: bcream
 eyeshadow: purple
@@ -14,5 +15,5 @@ if bcream in blush then {
 else{
     lipstick: lpsatin
 }
-
+}
 final look
