@@ -23,9 +23,9 @@ NUMBER = DIGIT, { DIGIT } ;
 
 IDENTIFIER = LETTER, { LETTER | DIGIT | "_" } ;
 
-BUY = "buy", BRAND;
+BUY = "buy", SERIAL;
 
-ITEM = "item", IDENTIFIER, ":", BRAND;
+ITEM = "item", IDENTIFIER, ":", SERIAL;
 
 BRAND = LETTER, DIGIT;
 
@@ -114,3 +114,12 @@ gcc -o bison_analyzer syntatic.tab.c lex.yy.c -lfl
 ./flex_analyzer < codigo_exemplo.txt
 ./bison_analyzer < codigo_exemplo.txt
 ```
+
+## Compilador
+
+### No Mac:
+```
+python3 main.py example.txt
+```
+Resultado do Teste:
+![foto](./src/output.png)
