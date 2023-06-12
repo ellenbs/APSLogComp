@@ -1,98 +1,83 @@
 %{
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "syntatic.tab.h"
-
-extern int yylex();
-void yyerror(const char *s) { printf("ERROR: %s\n", s); }
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <string.h>
+  extern int yylex();
+  void yyerror(const char *s) { printf("ERROR: %s\n", s); }
 %}
 
-%token MAKEUP FINAL_LOOK REPEAT TIMES IF IN THEN ELSE DEF FOUNDATION BLUSH EYESHADOW EYELINER MASCARA LIPSTICK LIPGLOSS LIPBALM
-%token COLOR_IDENTIFIER FOUNDATION_IDENTIFIER BLUSH_IDENTIFIER EYESHADOW_IDENTIFIER LIPSTICK_IDENTIFIER LIPGLOSS_IDENTIFIER LIPBALM_IDENTIFIER MASCARA_IDENTIFIER EYELINER_IDENTIFIER
-%token DIGIT IDENTIFIER LKEY RKEY COLON
+%token IDENTIFIER STRING INTEGER SERIAL BUY ITEM
+%token IF ELSE WHILE PRINT FUNCTION FUNCTION_CALL
+%token MINUS MULT EQUAL NOT PLUS DIV AND OR
+%token LPAREN RPAREN LKEY RKEY COMMA COLON
+%token EQUAL_TO GT LT
 
 %start program
 
 %%
 
-program:
-    MAKEUP statements FINAL_LOOK { printf("\nParsing complete.\n\n"); }
+program : statement_list 
+        ;
+
+block : LKEY statement_list RKEY
+      | LKEY RKEY
+      ;
+        
+statement_list : statement
+               | statement_list statement
+               ;
+        
+statement : POSITION IDENTIFIER COLON relexpression
+          | IDENTIFIER EQUAL relexpression
+          | PRINT LPAREN print_list RPAREN
+          | IF LPAREN relexpression RPAREN block
+          | IF LPAREN relexpression RPAREN block ELSE block
+          | WHILE LPAREN relexpression RPAREN block 
+          | FUNCTION IDENTIFIER LPAREN parameter_list RPAREN block
+          | FUNCTION_CALL IDENTIFIER LPAREN parameter_list RPAREN
+          | BUY relexpression
+          ;
+
+parameter_list : IDENTIFIER
+               | parameter_list COMMA IDENTIFIER
+               ;
+
+print_list : relexpression
+           | print_list COMMA relexpression
+           ;
+
+relexpression: expression EQUAL_TO expression
+             | expression GT expression
+             | expression LT expression
+             | expression
+             ;
+
+expression: term PLUS term
+          | term MINUS term
+          | term OR term
+          | term
+          ;
+          
+term: factor
+    | term MULT factor
+    | term DIV factor
+    | term AND factor
     ;
 
-statements:
-    statement
-    | statements statement
+factor: INTEGER 
+    | STRING 
+    | SERIAL
+    | IDENTIFIER 
+    | PLUS factor
+    | MINUS factor
+    | NOT factor
+    | LPAREN relexpression RPAREN
     ;
 
-statement:
-    foundation_statement
-    | blush_statement
-    | eyeshadow_statement
-    | eyeliner_statement
-    | mascara_statement
-    | lipstick_statement
-    | lipgloss_statement
-    | lipbalm_statement
-    | if_statement
-    | repeat_statement
-    | function_statement
-    ;
-
-foundation_statement:
-    FOUNDATION COLON FOUNDATION_IDENTIFIER { printf("\nFound foundation statement.\n\n"); }
-    ;
-
-blush_statement:
-    BLUSH COLON BLUSH_IDENTIFIER { printf("\nFound blush statement.\n\n"); }
-    ;
-
-eyeshadow_statement:
-    EYESHADOW COLON COLOR_IDENTIFIER { printf("\nFound eyeshadow statement.\n\n"); }
-    ;
-
-eyeliner_statement:
-    EYELINER COLON EYELINER_IDENTIFIER { printf("\nFound eyeliner statement.\n\n"); }
-    ;
-
-mascara_statement:
-    MASCARA COLON MASCARA_IDENTIFIER { printf("\nFound mascara statement.\n\n"); }
-    ;
-
-lipstick_statement:
-    LIPSTICK COLON LIPSTICK_IDENTIFIER { printf("\nFound lipstick statement.\n\n"); }
-    ;
-
-lipgloss_statement:
-    LIPGLOSS COLON LIPGLOSS_IDENTIFIER { printf("\nFound lipgloss statement.\n\n"); }
-    ;
-
-lipbalm_statement:
-    LIPBALM COLON LIPBALM_IDENTIFIER { printf("\nFound lipbalm statement.\n\n"); }
-    ;
-
-if_statement:
-    IF BLUSH_IDENTIFIER IN BLUSH THEN LKEY statements RKEY ELSE LKEY statements RKEY { printf("\nFound IF statement.\n\n"); }
-    | IF FOUNDATION_IDENTIFIER IN FOUNDATION THEN LKEY statements RKEY ELSE LKEY statements RKEY { printf("\nFound IF statement.\n\n"); }
-    | IF EYESHADOW_IDENTIFIER IN EYESHADOW THEN LKEY statements RKEY ELSE LKEY statements RKEY { printf("\nFound IF statement.\n\n"); }
-    | IF EYELINER_IDENTIFIER IN EYELINER THEN LKEY statements RKEY ELSE LKEY statements RKEY { printf("\nFound IF statement.\n\n"); }
-    | IF MASCARA_IDENTIFIER IN MASCARA THEN LKEY statements RKEY ELSE LKEY statements RKEY { printf("\nFound IF statement.\n\n"); }
-    | IF LIPSTICK_IDENTIFIER IN LIPSTICK THEN LKEY statements RKEY ELSE LKEY statements RKEY  { printf("\nFound IF statement.\n\n"); }
-    | IF LIPGLOSS_IDENTIFIER IN LIPGLOSS THEN LKEY statements RKEY ELSE LKEY statements RKEY  { printf("\nFound IF statement.\n\n"); }
-    | IF LIPBALM_IDENTIFIER IN LIPBALM THEN LKEY statements RKEY ELSE LKEY statements RKEY   { printf("\nFound IF statement.\n\n"); }
-    ;
-
-repeat_statement:
-    REPEAT DIGIT TIMES LKEY statements RKEY { printf("\nFound repeat statement.\n\n"); }
-    ;
-
-function_statement:
-    DEF IDENTIFIER LKEY statements RKEY { printf("\nFound function statement.\n\n"); }
-    ;
 
 %%
 
-int main(void) {
-    yyparse();
-    return 0;
+int main(){
+  yyparse();
+  return 0;
 }

@@ -1,73 +1,55 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
-#include "syntatic.tab.h"
+#include "parser.tab.h"
+
+
 %}
+
 
 %%
 
-[ \t\n]                 ;
+[ \t\n]                 ;   
+"if"                    { printf("if\n"); return IF; }
+"else"                  { printf("else\n"); return ELSE; }
+"while"                 { printf("while\n"); return WHILE; }
+"item"                  { printf("item\n"); return ITEM;}
 
-"makeup gwrm"           { printf("MAKEUP\n"); return MAKEUP;}
-"final look"            { printf("FINAL_LOOK\n"); return FINAL_LOOK;}
 
-"repeat"                { printf("REPEAT\n"); return REPEAT;}
-"times"			        { printf("TIMES\n"); return TIMES;}
-"if"                    { printf("IF\n"); return IF;}
-"in"                    { printf("IN\n"); return IN;}
-"then"                  { printf("THEN\n"); return THEN;}
-"else"                  { printf("ELSE\n"); return ELSE;}
-"def"                   { printf("DEF\n"); return DEF;}
+"print"                 { printf("print\n"); return PRINT; }
+"buy"                   { printf("buy\n"); return BUY; }
 
-"foundation"           { printf("FOUNDATION\n"); return FOUNDATION;}
-"blush"                { printf("BLUSH\n"); return BLUSH;}
-"eyeshadow"            { printf("EYESHADOW\n"); return EYESHADOW;}
-"eyeliner"             { printf("EYELINER\n"); return EYELINER;}
-"mascara"              { printf("MASCARA\n"); return MASCARA;}
-"lipstick"             { printf("LIPSTICK\n"); return LIPSTICK;}
-"lipgloss"             { printf("LIPGLOSS\n"); return LIPGLOSS;}
-"lipbalm"              { printf("LIPBALM\n"); return LIPBALM;}
+"def"                   { printf("function\n"); return FUNCTION; }
+"use"                   { printf("function call\n"); return FUNCTION_CALL; }
 
-"neutral"               { printf("neutral\n"); return COLOR_IDENTIFIER; }
-"pink"                  { printf("pink\n"); return COLOR_IDENTIFIER; }
-"red"                   { printf("red\n"); return COLOR_IDENTIFIER; }
-"purple"                { printf("purple\n"); return COLOR_IDENTIFIER; }
-"brown"                 { printf("brown\n"); return COLOR_IDENTIFIER; }
-"glittery"              { printf("glittery\n"); return COLOR_IDENTIFIER; }
 
-"fliquid"               { printf("fliquid\n"); return FOUNDATION_IDENTIFIER; }
-"fpowder"               { printf("fpowder\n"); return FOUNDATION_IDENTIFIER; }
-"fbbcream"              { printf("fbbcream\n"); return FOUNDATION_IDENTIFIER; }
-"fcccream"              { printf("fcccream\n"); return FOUNDATION_IDENTIFIER; }
+[a-zA-Z][0-9]+          { printf("Serial Number\n"); return SERIAL; }
+[a-zA-Z_][_a-zA-Z0-9]*  { printf("identifier\n"); return IDENTIFIER; }
+[0-9]+                  { printf("int\n"); return INTEGER; }
+\"(\\.|[^\"\n])*\"      { printf("str\n"); return STRING; }
 
-"bcream"                { printf("bcream\n"); return BLUSH_IDENTIFIER; }
-"bpowder"               { printf("bpowder\n"); return BLUSH_IDENTIFIER; }
 
-"lpmatte"               { printf("lpmatte\n"); return LIPSTICK_IDENTIFIER; }
-"lpcream"               { printf("lpcream\n"); return LIPSTICK_IDENTIFIER; }
-"lpsatin"               { printf("lpsatin\n"); return LIPSTICK_IDENTIFIER; }
+"+"                     { printf("PLUS\n"); return PLUS; }
+"-"                     { printf("MINUS\n"); return MINUS; }
+"*"                     { printf("MULT\n"); return MULT; }
+"/"                     { printf("DIV\n"); return DIV; }
+">"                     { printf("GT\n"); return GT; }
+"<"                     { printf("LT\n"); return LT; }
+"="                     { printf("EQUAL\n"); return EQUAL; }
+"=="                    { printf("EQUAL_TO\n"); return EQUAL_TO; }
+"!"                     { printf("NOT\n"); return NOT; }
+"&&"                    { printf("AND\n"); return AND; }
+"||"                    { printf("OR\n"); return OR; }
 
-"lgclear"               { printf("lgclear\n"); return LIPGLOSS_IDENTIFIER; }
-"lgcolored"             { printf("colored\n"); return LIPGLOSS_IDENTIFIER; }
 
-"lbtinted"              { printf("lbcolored\n"); return LIPBALM_IDENTIFIER; }
-"lbflavored"            { printf("lbflavored\n"); return LIPBALM_IDENTIFIER; }
-
-"liquid"                { printf("liquid\n"); return EYELINER_IDENTIFIER; }
-"pencil"                { printf("pencil\n"); return EYELINER_IDENTIFIER; }
-"gel"                   { printf("gel\n"); return EYELINER_IDENTIFIER; }
-
-"volumizing"            { printf("volumizing\n"); return MASCARA_IDENTIFIER; }
-"lengthening"           { printf("lengthening\n"); return MASCARA_IDENTIFIER; }
-"curling"               { printf("curling\n"); return MASCARA_IDENTIFIER; }
-
-[0-9]+                  { printf("DIGIT\n"); return DIGIT; }
-[a-zA-Z][a-zA-Z0-9_]*   { printf("IDENTIFIER\n"); return IDENTIFIER; }
-
+"("                     { printf("LPAREN\n"); return LPAREN; }
+")"                     { printf("RPAREN\n"); return RPAREN; }
 "{"                     { printf("LKEY\n"); return LKEY; }
 "}"                     { printf("RKEY\n"); return RKEY; }
 ":"                     { printf("COLON\n"); return COLON; }
+","                     { printf("COMMA\n"); return COMMA; }
 
-.                       printf("Unknown token!\n"); yyterminate();
+.                       printf("Unknown token\n"); yyterminate();
+
 
 %%

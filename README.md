@@ -1,4 +1,4 @@
-# Linguagem sobre Etapas de Maquiagem
+# APS Lógica da Computação
 
 ## Feito por:
 
@@ -8,94 +8,98 @@
 
 ``` 
 
-DIGIT = ( "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" );
+PROGRAM = STATEMENT_LIST ;
 
-LETTER = ( "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z" );
+STATEMENT_LIST = {STATEMENT}, STATEMENT_LIST;
 
-PROGRAM =  "makeup gwrm", { STATEMENT , LOOP_STATEMENT, CONDITIONAL, FUNCTION}, , "final look";
 
-STATEMENT = (FACE_LOOP | EYE_LOOP | LIP_LOOP);
+LETTER = ( a | ... | z | A | ... | Z ) ;
 
-TYPE = ("foundation" | "blush" | "eyeshadow" | "eyeliner" | "mascara" | "lipstick" | "lipgloss" | "lipbalm" );
+DIGIT = ( 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 ) ;
 
-FACE_LOOP = FOUDANTION_STATEMENT, BLUSH_STATEMENT;
+STRING = '"', { LETTER | DIGIT | " " | "_" }, '"' ;
 
-EYE_LOOP = EYESHADOW_STATEMENT, EYELINER_STATEMENT, MASCARA_STATEMENT;
+NUMBER = DIGIT, { DIGIT } ;
 
-LIP_LOOP = LIPSTICK_STATEMENT, LIPGLOSS_STATEMENT, LIPBALM_STATEMENT;
+IDENTIFIER = LETTER, { LETTER | DIGIT | "_" } ;
 
-LOOP_STATEMENT = "repeat", DIGIT, "times" { STATEMENT };
+BUY = "buy", BRAND;
 
-CONDITIONAL = "if", COLOR_IDENTIFIER "in", TYPE, "then" , { STATEMENT }, "else" { STATEMENT };
+ITEM = "item", IDENTIFIER, ":", BRAND;
 
-FUNCTION_STATEMENT = "def",  FUNCTION_NAME, "(" , { VARIABLES } , ")" , { STATEMENT };
-
-FUNCTION_NAME = IDENTIFIER;
+BRAND = LETTER, DIGIT;
 
 
 
-FOUDANTION_STATEMENT = "foudantion: ", FOUDANTION_IDENTIFIER;
+BLOCK = "{", {STATEMENT}, "}" ;
 
-BLUSH_STATEMENT = "blush: ", BLUSH_IDENTIFIER;
+STATEMENT = ( λ | ASSIGNMENT | PRINT | IF | WHILE | SHOOT | POSITION | FUNCTION_CALL | FUNCTION_DECLARATION), "\n" ;
 
-EYESHADOW_STATEMENT = "eyeshadow: ", EYESHADOW_IDENTIFIER;
+TERM = FACTOR, { ("*" | "/"), FACTOR } ;
 
-EYELINER_STATEMENT = "eyeliner: ", EYELINER_IDENTIFIER;
-
-MASCARA_STATEMENT = "mascara: ", MASCARA_IDENTIFIER;
-
-LIPSTICK_STATEMENT = "lipstick: ", LIPSTICK_IDENTIFIER;
-
-LIPGLOSS_STATEMENT = "lipgloss: ", LIPGLOSS_IDENTIFIER;
-
-LIPBALM_STATEMENT = "lipbalm: ", LIPBALM_IDENTIFIER;
+FACTOR = (("+" | "-"), FACTOR) | NUMBER | "(", EXPRESSION, ")" | IDENTIFIER ;
 
 
 
-VARIABLES = COLOR_IDENTIFIER, { "," COLOR_IDENTIFIER };
+ASSIGNMENT = IDENTIFIER, "=", EXPRESSION ;
 
-IDENTIFIER = LETTER, { LETTER | DIGIT | "_" };
+PRINT = "print", "(", EXPRESSION, ")" ;
 
-COLOR_IDENTIFIER = ("neutral" | "pink" | "red" | "purple" | "brown" | "glittery");
+IF = "if", "(", CONDITION, ")", BLOCK, [ "else", BLOCK ] ;
 
-FOUDANTION_IDENTIFIER = ("fliquid" | "fpowder" | "fbbcream" | "fcccream");
+WHILE = "while", "(", CONDITION, ")", BLOCK ;
 
-BLUSH_IDENTIFIER = ("bcream" | "bpowder");
+EXPRESSION = CONDITION, { ("||" | "&&"), CONDITION } ;
 
-EYESHADOW_IDENTIFIER = COLOR_IDENTIFIER;
+CONDITION = TERM, { ("<" | ">" | "==" | "!"), TERM } ;
 
-EYELINER_IDENTIFIER = ("liquid" | "pencil" | "gel");
+FUNCTION_DECLARATION = "def", IDENTIFIER, "(", PARAMETER_LIST, ")", BLOCK ;
 
-MASCARA_IDENTIFIER = ("volumizing" | "lengthening" | "curling");
-
-LIPSTICK_IDENTIFIER = ( "lpmatte" | "lpcream" | "lpsatin" );
-
-LIPGLOSS_IDENTIFIER= ("lgclear" | "lgcolored");
-
-LIPBALM_IDENTIFIER = ("lbtinted" | "lbflavored");
+FUNCTION_CALL = "use", IDENTIFIER, "(", [PARAMETER_LIST], ")" ;
 
 ```
 
 ## Exemplo do uso da linguagem
 
 ```
-makeup gwrm
-foundation: fpowder
-blush: bcream
-eyeshadow: purple
-if bcream in blush then {
-    lipstick: lpmatte
-    }
-else{
-    lipstick: lpsatin
-}
+item Rimel : E300
+estoque_rimel = 2
+
+item LipOil : E500
+estoque_lipoil = 0
+
+def mudar (Rimel, LipOil) {
+    item Rimel : E400
+    estoque_rimel = 0
+    item LipOil : Z200
+    estoque_lipoil = 20
     
-repeat 2 times {
-    eyeliner: gel
-    mascara: lengthening
+    while (estoque_lipoil > 0) {
+        if (LipOil == Z200){
+            buy Z200
+            estoque_lipoil = estoque_lipoil - 1
+        }    
+    }
+    print("LipOil:", LipOil, "Estoque:", estoque_lipoil, " ")
 }
 
-final look
+print("Rimel:", Rimel, "Estoque:", estoque_rimel, " " , "LipOil:", LipOil, "Estoque:", estoque_lipoil, " ")
+
+if (estoque_rimel > 0) {
+    if (Rimel == E3000){
+        buy E3000
+        estoque_rimel = estoque_rimel - 1
+        print("Comprou o Rimel:", Rimel)
+        print("Novo Estoque:", estoque_rimel, " ")
+        } else {
+            print("Rimel Desejado: E3000")
+            print("Rimel Disponível:", Rimel, " ")
+        }
+    } else {
+    print("Esgotou Rimel:", Rimel, " ")
+}
+
+use mudar(Rimel, LipOil)
 
 ```
 ## Como utilizar Flex e Bison:
@@ -108,9 +112,5 @@ gcc -o bison_analyzer syntatic.tab.c lex.yy.c -lfl
 ```
 ```
 ./flex_analyzer < codigo_exemplo.txt
-./bison_analyzer < codigo_exemplor.txt
+./bison_analyzer < codigo_exemplo.txt
 ```
-### Passando o código exemplo acima para o analyzer:
-![foto](./src/FlexBison1.png)
-![foto](./src/FlexBison2.png)
-![foto](./src/FlexBison3.png)
